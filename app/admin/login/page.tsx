@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react"
 import Link from "next/link"
 
 export default function AdminLoginPage() {
@@ -79,17 +79,17 @@ export default function AdminLoginPage() {
               </div>
               {error && (
                 <div className="flex items-center gap-3 p-3 bg-destructive/10 border border-destructive/30 rounded-lg">
-                  <AlertCircle size={18} className="text-destructive flex-shrink-0" />
+                  <AlertCircle size={18} className="text-destructive shrink-0" />
                   <p className="text-sm text-destructive">{error}</p>
                 </div>
               )}
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Login"}
+              <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : "" }`} disabled={isLoading}>
+                {isLoading ? <Loader2 size={20} className=" animate-spin"/> : "Login"}
               </Button>
             </form>
             <div className="mt-4 text-center text-sm text-foreground/70">
               {"Don't have an account? "}
-              <Link href="/admin/register" className="text-primary hover:underline underline-offset-4">
+              <Link href="/admin/register" className="text-secondary hover:underline underline-offset-4">
                 Register
               </Link>
             </div>

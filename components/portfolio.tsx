@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import BeforeAfterSlider from "@/components/before-after-slider"
+import { useState } from "react";
+import BeforeAfterSlider from "@/components/before-after-slider";
 
 const portfolioItems = [
   {
@@ -32,28 +32,28 @@ const portfolioItems = [
     before: "/raw-metal-sculpture.jpg",
     after: "/polished-artistic-metal-sculpture.jpg",
   },
-]
+];
 
-const categories = ["All", "Decorative", "Functional", "Architectural", "Art"]
+const categories = ["All", "Decorative", "Functional", "Architectural", "Art"];
 
 export default function Portfolio() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredItems =
-    selectedCategory === "All" ? portfolioItems : portfolioItems.filter((item) => item.category === selectedCategory)
+    selectedCategory === "All"
+      ? portfolioItems
+      : portfolioItems.filter((item) => item.category === selectedCategory);
 
   return (
     <section id="portfolio" className="py-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-balance mb-4">
-            Our{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Portfolio
-            </span>
+            Our <span className="text-primary">Portfolio</span>
           </h2>
           <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
-            Explore our collection of hand-cast works, from raw material to finished masterpiece
+            Explore our collection of hand-cast works, from raw material to
+            finished masterpiece
           </p>
         </div>
 
@@ -64,7 +64,9 @@ export default function Portfolio() {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                selectedCategory === category ? "glass bg-white/20 text-primary" : "glass hover:bg-white/10"
+                selectedCategory === category
+                  ? "glass bg-white/20 text-primary"
+                  : "glass hover:bg-white/10"
               }`}
             >
               {category}
@@ -81,10 +83,18 @@ export default function Portfolio() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="space-y-4">
-                <BeforeAfterSlider before={item.before} after={item.after} title={item.title} />
+                <BeforeAfterSlider
+                  before={item.before}
+                  after={item.after}
+                  title={item.title}
+                />
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
-                  <p className="text-primary text-sm font-medium mt-1">{item.category}</p>
+                  <h3 className="text-xl font-bold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="text-primary text-sm font-medium mt-1">
+                    {item.category}
+                  </p>
                 </div>
               </div>
             </div>
@@ -92,5 +102,5 @@ export default function Portfolio() {
         </div>
       </div>
     </section>
-  )
+  );
 }

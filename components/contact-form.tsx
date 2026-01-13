@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { CheckCircle, AlertCircle } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { CheckCircle, AlertCircle } from "lucide-react";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -12,53 +12,63 @@ export default function ContactForm() {
     address: "",
     inquiryType: "general-question",
     message: "",
-  })
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [errors, setErrors] = useState<Record<string, string>>({})
-  const [loading, setLoading] = useState(false)
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-    if (!formData.name.trim()) newErrors.name = "Full name is required"
-    else if (formData.name.trim().length < 3) newErrors.name = "Name must be at least 3 characters"
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = "Full name is required";
+    else if (formData.name.trim().length < 3)
+      newErrors.name = "Name must be at least 3 characters";
 
-    if (!formData.email.trim()) newErrors.email = "Email is required"
+    if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
+      newErrors.email = "Please enter a valid email address";
     }
 
-    if (formData.mobileNumber.trim() && !/^\d{10,15}$/.test(formData.mobileNumber.replace(/\D/g, ''))) {
-      newErrors.mobileNumber = "Please enter a valid mobile number (10+ digits)"
+    if (
+      formData.mobileNumber.trim() &&
+      !/^\d{10,15}$/.test(formData.mobileNumber.replace(/\D/g, ""))
+    ) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (10+ digits)";
     }
 
-    if (!formData.message.trim()) newErrors.message = "Message cannot be empty"
-    else if (formData.message.trim().length < 10) newErrors.message = "Please provide a bit more detail (min 10 chars)"
+    if (!formData.message.trim()) newErrors.message = "Message cannot be empty";
+    else if (formData.message.trim().length < 10)
+      newErrors.message = "Please provide a bit more detail (min 10 chars)";
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (!validateForm()) return
+    e.preventDefault();
 
-    setLoading(true)
-    setError(null)
+    if (!validateForm()) return;
+
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await fetch("/api/customer/submit", {
@@ -72,14 +82,14 @@ export default function ContactForm() {
           inquiryType: formData.inquiryType,
           message: formData.message,
         }),
-      })
+      });
 
       if (!response.ok) {
-        const result = await response.json()
-        throw new Error(result.error || "Failed to submit form")
+        const result = await response.json();
+        throw new Error(result.error || "Failed to submit form");
       }
 
-      setSubmitted(true)
+      setSubmitted(true);
       setFormData({
         name: "",
         email: "",
@@ -87,19 +97,19 @@ export default function ContactForm() {
         address: "",
         inquiryType: "general-question",
         message: "",
-      })
-      setErrors({})
+      });
+      setErrors({});
 
       // Auto-reset after 3 seconds
       setTimeout(() => {
-        setSubmitted(false)
-      }, 3000)
+        setSubmitted(false);
+      }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (submitted) {
     return (
@@ -108,11 +118,15 @@ export default function ContactForm() {
           <div className="flex justify-center">
             <CheckCircle className="text-green-500 animate-bounce" size={64} />
           </div>
-          <h3 className="text-2xl font-bold text-foreground">Thanks for reaching out!</h3>
-          <p className="text-foreground/70">We'll respond to your inquiry within 24 hours.</p>
+          <h3 className="text-2xl font-bold text-foreground">
+            Thanks for reaching out!
+          </h3>
+          <p className="text-foreground/70">
+            We'll respond to your inquiry within 24 hours.
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -121,7 +135,9 @@ export default function ContactForm() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Full Name *</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Full Name *
+          </label>
           <input
             type="text"
             name="name"
@@ -131,11 +147,17 @@ export default function ContactForm() {
             placeholder="Your name"
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
           />
-          {errors.name && <p className="text-xs text-red-400 mt-1 font-medium">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-xs text-red-400 mt-1 font-medium">
+              {errors.name}
+            </p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Email Address *</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Email Address *
+          </label>
           <input
             type="email"
             name="email"
@@ -145,11 +167,17 @@ export default function ContactForm() {
             placeholder="your@email.com"
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
           />
-          {errors.email && <p className="text-xs text-red-400 mt-1 font-medium">{errors.email}</p>}
+          {errors.email && (
+            <p className="text-xs text-red-400 mt-1 font-medium">
+              {errors.email}
+            </p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Mobile Number</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Mobile Number
+          </label>
           <input
             type="tel"
             name="mobileNumber"
@@ -158,11 +186,17 @@ export default function ContactForm() {
             placeholder="+91 70030 20846"
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
           />
-          {errors.mobileNumber && <p className="text-xs text-red-400 mt-1 font-medium">{errors.mobileNumber}</p>}
+          {errors.mobileNumber && (
+            <p className="text-xs text-red-400 mt-1 font-medium">
+              {errors.mobileNumber}
+            </p>
+          )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Address</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Address
+          </label>
           <input
             type="text"
             name="address"
@@ -174,7 +208,9 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Inquiry Type</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Inquiry Type
+          </label>
           <select
             name="inquiryType"
             value={formData.inquiryType}
@@ -191,7 +227,9 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Message *</label>
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Message *
+          </label>
           <textarea
             name="message"
             value={formData.message}
@@ -201,7 +239,11 @@ export default function ContactForm() {
             rows={4}
             className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all resize-none"
           />
-          {errors.message && <p className="text-xs text-red-400 mt-1 font-medium">{errors.message}</p>}
+          {errors.message && (
+            <p className="text-xs text-red-400 mt-1 font-medium">
+              {errors.message}
+            </p>
+          )}
         </div>
 
         {error && (
@@ -214,11 +256,11 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:shadow-lg active:scale-95 disabled:opacity-70 transition-all duration-200"
+          className="w-full px-6 py-3 bg-primary text-foreground font-semibold rounded-lg hover:shadow-lg active:scale-95 disabled:opacity-70 transition-all duration-200"
         >
           {loading ? "Sending..." : "Send Message"}
         </button>
       </form>
     </div>
-  )
+  );
 }

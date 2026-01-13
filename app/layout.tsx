@@ -73,10 +73,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        <SmoothScrolling>
+        {/* <SmoothScrolling> */}
           {children}
           <Analytics />
-        </SmoothScrolling>
+        {/* </SmoothScrolling> */}
       </body>
     </html>
   )

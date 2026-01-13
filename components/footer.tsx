@@ -1,50 +1,52 @@
-"use client"
+"use client";
 
-import { Facebook, Instagram, Linkedin, Mail } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
+  const isMobile = useIsMobile();
 
   const socialLinks = [
     {
       name: "Facebook",
       url: "https://facebook.com/castkeepofficial",
       icon: Facebook,
-      color: "hover:text-blue-600",
+      color: "hover:text-primary",
     },
     {
       name: "Instagram",
       url: "https://instagram.com/castkeepofficial",
       icon: Instagram,
-      color: "hover:text-pink-600",
+      color: "hover:text-primary",
     },
     {
       name: "LinkedIn",
       url: "https://linkedin.com/company/castkeep",
       icon: Linkedin,
-      color: "hover:text-blue-700",
+      color: "hover:text-primary",
     },
     {
       name: "Email",
       url: "mailto:support@castkeep.com",
       icon: Mail,
-      color: "hover:text-amber-600",
+      color: "hover:text-primary",
     },
-  ]
+  ];
 
   return (
-    <footer className="glass mt-20 mx-4 md:mx-8 mb-4 px-8 py-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <footer className="glass mt-20 mx-4 md:mx-8 mb-4 px-8 py-12 bg-muted font-semibold">
+      <div className="max-w-7xl mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 ">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full" />
-              <h3 className="text-xl font-bold text-foreground">CastKeep</h3>
-            </div>
+           <div className="flex items-center gap-2">
+                         <Image src={"/logo.svg"} width={isMobile? 100: 140} height={isMobile? 100: 140} alt="Bloody Boka" />
+                     </div>
             <p className="text-foreground/70 text-sm leading-relaxed">
-              Preserve your most precious moments with beautiful, lasting hand casting sculptures. Create memories that
-              last a lifetime.
+              Preserve your most precious moments with beautiful, lasting hand
+              casting sculptures. Create memories that last a lifetime.
             </p>
           </div>
 
@@ -53,7 +55,10 @@ export default function Footer() {
             <h4 className="font-semibold text-foreground">Shop</h4>
             <ul className="space-y-2 text-foreground/70 text-sm">
               <li>
-                <a href="#product" className="hover:text-accent transition-colors">
+                <a
+                  href="#product"
+                  className="hover:text-accent transition-colors"
+                >
                   Hand Casting Kit
                 </a>
               </li>
@@ -80,7 +85,10 @@ export default function Footer() {
             <h4 className="font-semibold text-foreground">Support</h4>
             <ul className="space-y-2 text-foreground/70 text-sm">
               <li>
-                <a href="#how-it-works" className="hover:text-accent transition-colors">
+                <a
+                  href="#how-it-works"
+                  className="hover:text-accent transition-colors"
+                >
                   How It Works
                 </a>
               </li>
@@ -90,7 +98,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-accent transition-colors">
+                <a
+                  href="#contact"
+                  className="hover:text-accent transition-colors"
+                >
                   Contact Us
                 </a>
               </li>
@@ -107,7 +118,7 @@ export default function Footer() {
             <h4 className="font-semibold text-foreground">Follow Us</h4>
             <div className="flex gap-4">
               {socialLinks.map((social) => {
-                const Icon = social.icon
+                const Icon = social.icon;
                 return (
                   <a
                     key={social.name}
@@ -120,7 +131,7 @@ export default function Footer() {
                   >
                     <Icon size={20} />
                   </a>
-                )
+                );
               })}
             </div>
             <div className="text-xs text-foreground/60 pt-2">
@@ -148,7 +159,8 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-center text-foreground/60 text-sm">
-            &copy; {currentYear} CastKeep. All rights reserved. | Skin-Safe • Non-Toxic • Proudly Family-Owned |{" "}
+            &copy; {currentYear} CastKeep. All rights reserved. | Skin-Safe •
+            Non-Toxic • Proudly Family-Owned |{" "}
             <a href="#contact" className="hover:text-accent transition-colors">
               Contact
             </a>
@@ -156,5 +168,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

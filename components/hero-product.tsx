@@ -1,6 +1,6 @@
-"use client"
-import Link from "next/link"
-import { ChevronDown } from "lucide-react"
+"use client";
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 export default function HeroProduct() {
   return (
@@ -17,16 +17,24 @@ export default function HeroProduct() {
               <span className="text-accent"> Forever</span>
             </h1>
             <p className="text-lg text-foreground/70 text-balance max-w-lg leading-relaxed">
-              Create stunning 3D hand sculptures that capture precious moments. Perfect for newborns, couples, families,
-              and unforgettable milestones. Skin-safe, simple, and ready to cherish for a lifetime.
+              Create stunning 3D hand sculptures that capture precious moments.
+              Perfect for newborns, couples, families, and unforgettable
+              milestones. Skin-safe, simple, and ready to cherish for a
+              lifetime.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link href="#contact-form" className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-lg hover:shadow-lg active:scale-95 transition-all duration-200">
+            <Link
+              href="#contact-form"
+              className="px-8 py-4 bg-primary text-foreground font-semibold rounded-lg hover:shadow-lg active:scale-95 transition-all duration-200"
+            >
               Get Started • ₹49.99
             </Link>
-            <Link href="#how-it-works" className="px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 active:scale-95 transition-all duration-200">
+            <Link
+              href="#how-it-works"
+              className="px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 active:scale-95 transition-all duration-200"
+            >
               See How It Works
             </Link>
           </div>
@@ -42,14 +50,19 @@ export default function HeroProduct() {
                     </span>
                   ))}
                 </div>
-                <span className="text-foreground/70 font-medium">4.9/5 (2,340+ Reviews)</span>
+                <span className="text-foreground/70 font-medium">
+                  4.9/5 (2,340+ Reviews)
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-2">
                 <span className="text-xl">✓</span>
                 <span className="text-foreground/70">
-                  <span className="font-semibold text-foreground">Skin-Safe</span> & Non-Toxic
+                  <span className="font-semibold text-foreground">
+                    Skin-Safe
+                  </span>{" "}
+                  & Non-Toxic
                 </span>
               </div>
               <div className="h-4 w-px bg-border" />
@@ -71,7 +84,9 @@ export default function HeroProduct() {
             />
           </div>
           <div className="absolute -bottom-4 -right-4 glass p-4 rounded-xl max-w-xs">
-            <p className="text-sm font-semibold text-foreground">Complete Kit Includes:</p>
+            <p className="text-sm font-semibold text-foreground">
+              Complete Kit Includes:
+            </p>
             <ul className="text-xs text-foreground/70 space-y-1 mt-2">
               <li>✓ 1800g Premium Molding Powder</li>
               <li>✓ High-Grade Casting Stone</li>
@@ -88,5 +103,5 @@ export default function HeroProduct() {
         <ChevronDown className="text-accent" size={32} />
       </div>
     </section>
-  )
+  );
 }

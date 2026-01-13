@@ -261,7 +261,7 @@ export default function ReviewsManagement() {
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
         {/* Review Form - Horizontal Aesthetic */}
         <div className="xl:col-span-4">
-          <div className="glass p-8 sticky top-24 border-white/20 shadow-4xl relative overflow-hidden group">
+          <div className="glass p-8 sticky top-24 border-white/20 shadow-4xl overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full -mr-16 -mt-16 blur-3xl transition-colors group-hover:bg-amber-500/10" />
             
             <h3 className="text-2xl font-black text-foreground mb-8 flex items-center gap-3 relative z-10">
@@ -324,7 +324,7 @@ export default function ReviewsManagement() {
                   required
                   value={formData.reviewText}
                   onChange={(e) => setFormData({ ...formData, reviewText: e.target.value })}
-                  className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all resize-none font-medium min-h-[120px]"
+                  className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-foreground focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all resize-none font-medium min-h-30"
                   placeholder="The voice of satisfaction..."
                 />
                 {errors.reviewText && <p className="text-[10px] font-black uppercase text-red-500 ml-1 mt-1">{errors.reviewText}</p>}
@@ -348,7 +348,7 @@ export default function ReviewsManagement() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 h-16 bg-gradient-to-br from-amber-500 to-amber-700 text-white font-black rounded-2xl hover:shadow-[0_12px_30px_rgba(245,158,11,0.3)] hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 cursor-pointer uppercase tracking-[0.2em] text-xs"
+                  className="flex-1 h-16 bg-linear-to-br from-amber-500 to-amber-700 text-white font-black rounded-2xl hover:shadow-[0_12px_30px_rgba(245,158,11,0.3)] hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 cursor-pointer uppercase tracking-[0.2em] text-xs"
                 >
                   {isSubmitting ? "Processing..." : editingId ? "Refine Sentiment" : "Archive Voice"}
                 </button>
@@ -369,7 +369,7 @@ export default function ReviewsManagement() {
         {/* Reviews Table - Horizontal Grid Aesthetic */}
         <div className="xl:col-span-8 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-6 px-2">
-            <div className="relative w-full sm:w-[450px] group">
+            <div className="relative w-full sm:w-112.5 group">
               <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                  <Search className="w-5 h-5 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
               </div>
@@ -401,7 +401,7 @@ export default function ReviewsManagement() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-white/[0.02] border-b border-white/10">
+                  <tr className="bg-white/2 border-b border-white/10">
                     <th className="p-8 w-20">
                       <button onClick={toggleSelectAll} className="text-foreground transition-all cursor-pointer hover:scale-125 active:scale-90">
                         {selectedIds.length === filteredReviews.length && filteredReviews.length > 0 ? (
@@ -417,7 +417,7 @@ export default function ReviewsManagement() {
                     <th className="p-8 font-black text-[10px] uppercase tracking-[0.3em] text-foreground/30 text-right">Ops</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/[0.03]">
+                <tbody className="divide-y divide-white/3">
                   {loading ? (
                      <tr>
                         <td colSpan={5} className="p-32 text-center">
@@ -534,12 +534,12 @@ export default function ReviewsManagement() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="flex-col sm:flex-row gap-6 mt-12 relative z-10">
-            <AlertDialogCancel className="w-full sm:flex-1 h-20 bg-white/5 border-white/10 hover:bg-white/10 text-foreground font-black uppercase tracking-[0.3em] text-xs rounded-[2rem] cursor-pointer transition-all border-2">
+            <AlertDialogCancel className="w-full sm:flex-1 h-20 bg-white/5 border-white/10 hover:bg-white/10 text-foreground font-black uppercase tracking-[0.3em] text-xs rounded-4xl cursor-pointer transition-all border-2">
                Abort Wipe
             </AlertDialogCancel>
             <AlertDialogAction 
               onClick={handleDeleteConfirm}
-              className="w-full sm:flex-1 h-20 bg-red-600 hover:bg-red-500 text-white font-black uppercase tracking-[0.3em] text-xs rounded-[2rem] border-none shadow-[0_15px_40px_rgba(220,38,38,0.4)] cursor-pointer hover:scale-[1.05] active:scale-95 transition-all"
+              className="w-full sm:flex-1 h-20 bg-red-600 hover:bg-red-500 text-white font-black uppercase tracking-[0.3em] text-xs rounded-4xl border-none shadow-[0_15px_40px_rgba(220,38,38,0.4)] cursor-pointer hover:scale-[1.05] active:scale-95 transition-all"
             >
               Execute Purge
             </AlertDialogAction>

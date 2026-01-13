@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -8,15 +8,13 @@ export default function Hero() {
       <div className="max-w-4xl mx-auto text-center space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
         <div className="space-y-4">
           <h1 className="text-5xl md:text-7xl font-bold text-balance">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Timeless Hand-Cast
-            </span>
+            <span className="text-primary">Timeless Hand-Cast</span>
             <br />
             <span className="text-foreground">Masterpieces</span>
           </h1>
           <p className="text-lg md:text-xl text-foreground/70 text-balance max-w-2xl mx-auto">
-            Discover exceptional hand-casting artistry. Each piece is crafted with precision, passion, and decades of
-            expertise.
+            Discover exceptional hand-casting artistry. Each piece is crafted
+            with precision, passion, and decades of expertise.
           </p>
         </div>
 
@@ -24,7 +22,7 @@ export default function Hero() {
           <button className="glass px-8 py-4 text-primary font-semibold hover:bg-white/20 active:scale-95 transition-all duration-200">
             View Portfolio
           </button>
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full hover:shadow-lg active:scale-95 transition-all duration-200">
+          <button className="px-8 py-4 bg-primary text-foreground font-semibold rounded-full hover:shadow-lg active:scale-95 transition-all duration-200">
             Get Started
           </button>
         </div>
@@ -35,5 +33,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

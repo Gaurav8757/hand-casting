@@ -16,6 +16,8 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const menuItems = [
   {
@@ -53,6 +55,7 @@ const menuItems = [
 export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -83,8 +86,9 @@ export default function Sidebar() {
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 border-b bg-card sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <LayoutDashboard className="text-primary" size={24} />
-          <span className="font-bold text-xl">CastKeep</span>
+         <div className="flex items-center gap-2">
+                                  <Image src={"/logo.svg"} width={isMobile? 100: 140} height={isMobile? 100: 140} alt="Bloody Boka" />
+                              </div>
         </div>
         <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -107,8 +111,9 @@ export default function Sidebar() {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 hidden lg:flex items-center gap-2 border-b">
-            <LayoutDashboard className="text-primary" size={28} />
-            <span className="font-bold text-2xl">CastKeep</span>
+          <div className="flex items-center gap-2">
+                                   <Image src={"/logo.svg"} width={isMobile? 100: 140} height={isMobile? 100: 140} alt="Bloody Boka" />
+                               </div>
           </div>
 
           <div className="p-4 flex-1">
@@ -122,7 +127,7 @@ export default function Sidebar() {
                     className={cn(
                       "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                       isActive 
-                        ? "bg-primary text-primary-foreground shadow-md" 
+                        ? "bg-primary shadow-md" 
                         : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                     )}
                   >
@@ -136,7 +141,7 @@ export default function Sidebar() {
 
           {/* User Info & Logout */}
           <div className="p-4 border-t">
-            <div className="flex items-center gap-3 px-4 py-3 mb-4 rounded-lg bg-accent/50">
+            <div className="flex items-center gap-3 px-4 py-3 mb-4 rounded-lg bg-muted/50">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
                 A
               </div>
@@ -147,7 +152,7 @@ export default function Sidebar() {
             </div>
             <Button 
               variant="outline" 
-              className="w-full gap-2 justify-start hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30" 
+              className="w-full gap-2 justify-start hover:bg-destructive/10 hover:text-destructive border-destructive/30" 
               onClick={handleLogout}
               disabled={isLoading}
             >

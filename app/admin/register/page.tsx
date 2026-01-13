@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { Loader2 } from "lucide-react"
 
 export default function AdminRegisterPage() {
   const [name, setName] = useState("")
@@ -106,8 +107,8 @@ export default function AdminRegisterPage() {
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Registering..." : "Register"}
+            <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : "" }`} disabled={isLoading}>
+              {isLoading ? <Loader2 size={20} className=" animate-spin"/> : "Register"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">

@@ -1,82 +1,116 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --background: oklch(98% 0.001 0);
+  --foreground: oklch(20% 0.02 240);
+  --card: oklch(99% 0 0);
+  --card-foreground: oklch(20% 0.02 240);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(20% 0.02 240);
+
+  /* Primary: Your chosen green */
+  --primary: oklch(88.638% 0.21239 120.975);
+  --primary-hover: oklch(82% 0.22 121);
+  --primary-active: oklch(75% 0.23 121);
+  --primary-foreground: oklch(20% 0.02 240);
+
+  /* Secondary: Lighter green tint */
+  --secondary: oklch(93% 0.12 122);
+  --secondary-foreground: oklch(20% 0.02 240);
+
+  /* Accent: Complementary teal */
+  --accent: oklch(75% 0.18 185);
+  --accent-foreground: oklch(98% 0 0);
+
+  /* Muted: Desaturated green */
+  --muted: oklch(85% 0.08 120);
+  --muted-foreground: oklch(50% 0.05 120);
+
+  /* Destructive: Red for errors */
+  --destructive: oklch(60% 0.22 20);
+  --destructive-foreground: oklch(98% 0 0);
+
+  /* Borders & Inputs */
+  --border: oklch(92% 0.01 120);
+  --input: oklch(95% 0.005 120);
+  --ring: oklch(88.638% 0.21239 120.975);
+
+  /* Chart Colors: Green gradient */
+  --chart-1: oklch(88.638% 0.21239 120.975);
+  --chart-2: oklch(78% 0.2 120);
+  --chart-3: oklch(68% 0.18 120);
+  --chart-4: oklch(58% 0.16 120);
+  --chart-5: oklch(48% 0.14 120);
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: oklch(99% 0 0);
+  --sidebar-foreground: oklch(20% 0.02 240);
+  --sidebar-primary: oklch(88.638% 0.21239 120.975);
+  --sidebar-primary-foreground: oklch(20% 0.02 240);
+  --sidebar-accent: oklch(93% 0.12 122);
+  --sidebar-accent-foreground: oklch(20% 0.02 240);
+  --sidebar-border: oklch(92% 0.01 120);
+  --sidebar-ring: oklch(88.638% 0.21239 120.975);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: oklch(15% 0.01 240);
+  --foreground: oklch(97% 0.002 0);
+  --card: oklch(18% 0.01 240);
+  --card-foreground: oklch(97% 0.002 0);
+  --popover: oklch(16% 0.01 240);
+  --popover-foreground: oklch(97% 0.002 0);
+
+  /* Primary: Bright green for dark mode */
+  --primary: oklch(88.638% 0.21239 120.975);
+  --primary-hover: oklch(82% 0.22 121);
+  --primary-active: oklch(75% 0.23 121);
+  --primary-foreground: oklch(15% 0.01 240);
+
+  /* Secondary: Light green */
+  --secondary: oklch(70% 0.15 120);
+  --secondary-foreground: oklch(97% 0.002 0);
+
+  /* Accent: Bright teal */
+  --accent: oklch(75% 0.2 185);
+  --accent-foreground: oklch(15% 0.01 240);
+
+  /* Muted: Muted green */
+  --muted: oklch(40% 0.08 120);
+  --muted-foreground: oklch(75% 0.05 120);
+
+  /* Destructive: Bright red */
+  --destructive: oklch(70% 0.25 20);
+  --destructive-foreground: oklch(15% 0.01 240);
+
+  /* Borders & Inputs */
+  --border: oklch(25% 0.01 240);
+  --input: oklch(25% 0.01 240);
+  --ring: oklch(88.638% 0.21239 120.975);
+
+  /* Chart Colors: Green gradient */
+  --chart-1: oklch(88.638% 0.21239 120.975);
+  --chart-2: oklch(78% 0.2 120);
+  --chart-3: oklch(68% 0.18 120);
+  --chart-4: oklch(58% 0.16 120);
+  --chart-5: oklch(48% 0.14 120);
+
+  --sidebar: oklch(18% 0.01 240);
+  --sidebar-foreground: oklch(97% 0.002 0);
+  --sidebar-primary: oklch(88.638% 0.21239 120.975);
+  --sidebar-primary-foreground: oklch(15% 0.01 240);
+  --sidebar-accent: oklch(70% 0.15 120);
+  --sidebar-accent-foreground: oklch(97% 0.002 0);
+  --sidebar-border: oklch(25% 0.01 240);
+  --sidebar-ring: oklch(88.638% 0.21239 120.975);
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -124,6 +158,6 @@
   }
 }
 
-button{
-  cursor: pointer!important;
+button {
+  cursor: pointer !important;
 }

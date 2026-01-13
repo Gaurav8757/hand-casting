@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import ContactForm from "@/components/contact-form"
-import { Phone, MessageCircle, Mail, Truck } from "lucide-react"
+import ContactForm from "@/components/contact-form";
+import { Phone, MessageCircle, Mail, Truck } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -15,7 +15,8 @@ export default function ContactSection() {
                 <span className="text-accent"> We're Here to Help</span>
               </h2>
               <p className="text-foreground/70 text-lg">
-                Our team is ready to assist with any questions about your CastKeep hand casting kit.
+                Our team is ready to assist with any questions about your
+                CastKeep hand casting kit.
               </p>
             </div>
 
@@ -29,9 +30,11 @@ export default function ContactSection() {
                   <Phone className="text-accent" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Call Us</h3>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    Call Us
+                  </h3>
                   <p className="text-foreground/70">+91 70030 20846</p>
-                  <p className="text-xs text-foreground/60 mt-1">24*7  IST</p>
+                  <p className="text-xs text-foreground/60 mt-1">24*7 IST</p>
                 </div>
               </a>
 
@@ -42,12 +45,16 @@ export default function ContactSection() {
                 rel="noopener noreferrer"
                 className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group"
               >
-                <div className="p-3 bg-green-500/20 rounded-lg group-hover:scale-110 transition-transform">
-                  <MessageCircle className="text-green-600" size={24} />
+                <div className="p-3 bg-primary/20 rounded-lg group-hover:scale-110 transition-transform">
+                  <MessageCircle className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
-                  <p className="text-foreground/70">Message us anytime for quick support</p>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    WhatsApp
+                  </h3>
+                  <p className="text-foreground/70">
+                    Message us anytime for quick support
+                  </p>
                 </div>
               </a>
 
@@ -62,7 +69,9 @@ export default function ContactSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Email</h3>
                   <p className="text-foreground/70">support@castkeep.com</p>
-                  <p className="text-xs text-foreground/60 mt-1">Response within 24 hours</p>
+                  <p className="text-xs text-foreground/60 mt-1">
+                    Response within 24 hours
+                  </p>
                 </div>
               </a>
 
@@ -72,9 +81,15 @@ export default function ContactSection() {
                   <Truck className="text-accent" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Fast Shipping</h3>
-                  <p className="text-foreground/70">Orders ship within 24 hours</p>
-                  <p className="text-xs text-foreground/60 mt-1">Free shipping over ₹75</p>
+                  <h3 className="font-semibold text-foreground mb-1">
+                    Fast Shipping
+                  </h3>
+                  <p className="text-foreground/70">
+                    Orders ship within 24 hours
+                  </p>
+                  <p className="text-xs text-foreground/60 mt-1">
+                    Free shipping over ₹75
+                  </p>
                 </div>
               </div>
             </div>
@@ -85,5 +100,5 @@ export default function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

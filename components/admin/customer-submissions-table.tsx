@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -12,117 +12,157 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, Search, Filter, Layers, CreditCard, Calendar, Mail, Phone, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@tanstack/react-table";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  Search,
+  Filter,
+  Layers,
+  CreditCard,
+  Calendar,
+  Mail,
+  Phone,
+  User,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { createClient } from "@/lib/supabase/client"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
 export type CustomerSubmission = {
-  id: string
-  name: string
-  mobile_number: string
-  email: string
-  address: string
-  inquiry_type: string
-  message: string
-  submission_status: "pending" | "completed" | "in-progress"
-  advance_payment: number
-  final_payment: number
-  total_amount: number
-  created_at: string
-}
+  id: string;
+  name: string;
+  mobile_number: string;
+  email: string;
+  address: string;
+  inquiry_type: string;
+  message: string;
+  submission_status: "pending" | "completed" | "in-progress";
+  advance_payment: number;
+  final_payment: number;
+  total_amount: number;
+  created_at: string;
+};
 
 export default function CustomerSubmissionsTable() {
-  const [data, setData] = useState<CustomerSubmission[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = useState({})
-  const [timeFilter, setTimeFilter] = useState<string>("all")
+  const [data, setData] = useState<CustomerSubmission[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [timeFilter, setTimeFilter] = useState<string>("all");
 
   useEffect(() => {
-    fetchSubmissions()
-  }, [timeFilter])
+    fetchSubmissions();
+  }, [timeFilter]);
 
   const fetchSubmissions = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const supabase = createClient()
-      let query = supabase.from("customer_submissions").select("*").order("created_at", { ascending: false })
+      const supabase = createClient();
+      let query = supabase
+        .from("customer_submissions")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-      const now = new Date()
-      const startOfYear = new Date(now.getFullYear(), 0, 1)
-      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1)
-      const startOfQuarter = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1)
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const startOfQuarter = new Date(
+        now.getFullYear(),
+        Math.floor(now.getMonth() / 3) * 3,
+        1
+      );
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
       switch (timeFilter) {
         case "today":
-          query = query.gte("created_at", today.toISOString())
-          break
+          query = query.gte("created_at", today.toISOString());
+          break;
         case "month":
-          query = query.gte("created_at", startOfMonth.toISOString())
-          break
+          query = query.gte("created_at", startOfMonth.toISOString());
+          break;
         case "quarter":
-          query = query.gte("created_at", startOfQuarter.toISOString())
-          break
+          query = query.gte("created_at", startOfQuarter.toISOString());
+          break;
         case "year":
-          query = query.gte("created_at", startOfYear.toISOString())
-          break
+          query = query.gte("created_at", startOfYear.toISOString());
+          break;
       }
 
-      const { data: submissions, error } = await query
+      const { data: submissions, error } = await query;
 
       if (error) {
-        console.error("Error fetching submissions:", error)
-        return
+        console.error("Error fetching submissions:", error);
+        return;
       }
 
-      setData(submissions || [])
+      setData(submissions || []);
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     try {
-      const supabase = createClient()
+      const supabase = createClient();
       const { error } = await supabase
         .from("customer_submissions")
         .update({ submission_status: newStatus })
-        .eq("id", id)
+        .eq("id", id);
 
-      if (error) throw error
-      
-      setData(prev => prev.map(item => item.id === id ? { ...item, submission_status: newStatus as any } : item))
+      if (error) throw error;
+
+      setData((prev) =>
+        prev.map((item) =>
+          item.id === id
+            ? { ...item, submission_status: newStatus as any }
+            : item
+        )
+      );
     } catch (error) {
-      console.error("Error updating status:", error)
+      console.error("Error updating status:", error);
     }
-  }
+  };
 
   const columns: ColumnDef<CustomerSubmission>[] = [
     {
       id: "select",
       header: ({ table }) => (
         <Checkbox
-          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="translate-y-0.5 border-white/20 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+          className="translate-y-0.5 border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
         />
       ),
       cell: ({ row }) => (
@@ -130,7 +170,7 @@ export default function CustomerSubmissionsTable() {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="translate-y-0.5 border-white/20 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+          className="translate-y-0.5 border-white/20 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
         />
       ),
       enableSorting: false,
@@ -139,33 +179,47 @@ export default function CustomerSubmissionsTable() {
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <button 
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-amber-500 transition-colors uppercase tracking-[0.2em] text-[10px] font-black"
+          className="flex items-center gap-2 hover:text-primary transition-colors uppercase tracking-[0.2em] text-[10px] font-black"
         >
-          <User size={12} className="text-amber-500" />
+          <User size={12} className="text-primary" />
           Name
           <ArrowUpDown className="h-3 w-3" />
         </button>
       ),
       cell: ({ row }) => (
         <div className="flex flex-col">
-            <div className="font-black text-foreground uppercase italic tracking-tight text-base">{row.getValue("name")}</div>
-            <div className="text-[10px] font-mono text-foreground/30 font-bold uppercase tracking-widest mt-0.5">#{row.original.id.slice(0,8)}</div>
+          <div className="font-black text-foreground uppercase italic tracking-tight text-base">
+            {row.getValue("name")}
+          </div>
+          <div className="text-[10px] font-mono text-foreground/30 font-bold uppercase tracking-widest mt-0.5">
+            #{row.original.id.slice(0, 8)}
+          </div>
         </div>
       ),
     },
     {
       accessorKey: "contact",
-      header: () => <div className="uppercase tracking-[0.2em] text-[10px] font-black">Contact Vector</div>,
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black">
+          Contact Vector
+        </div>
+      ),
       cell: ({ row }) => (
         <div className="space-y-1">
-          <a href={`tel:${row.original.mobile_number}`} className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-amber-500 transition-colors">
-            <Phone size={10} className="text-amber-500/50" />
+          <a
+            href={`tel:${row.original.mobile_number}`}
+            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-primary transition-colors"
+          >
+            <Phone size={10} className="text-primary/50" />
             {row.original.mobile_number}
           </a>
-          <a href={`mailto:${row.original.email}`} className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-amber-500 transition-colors">
-            <Mail size={10} className="text-amber-500/50" />
+          <a
+            href={`mailto:${row.original.email}`}
+            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-primary transition-colors"
+          >
+            <Mail size={10} className="text-primary/50" />
             {row.original.email}
           </a>
         </div>
@@ -173,64 +227,103 @@ export default function CustomerSubmissionsTable() {
     },
     {
       accessorKey: "inquiry_type",
-      header: () => <div className="uppercase tracking-[0.2em] text-[10px] font-black">Segment</div>,
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black">
+          Segment
+        </div>
+      ),
       cell: ({ row }) => (
         <div className="inline-flex px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest text-foreground/50 italic">
-            {row.getValue("inquiry_type")}
+          {row.getValue("inquiry_type")}
         </div>
       ),
     },
     {
       accessorKey: "submission_status",
-      header: () => <div className="uppercase tracking-[0.2em] text-[10px] font-black text-center">Protocol Status</div>,
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black text-center">
+          Protocol Status
+        </div>
+      ),
       cell: ({ row }) => {
-        const status = row.getValue("submission_status") as string
+        const status = row.getValue("submission_status") as string;
         return (
           <div className="flex justify-center">
             <Select
-                value={status}
-                onValueChange={(value) => handleStatusChange(row.original.id, value)}
+              value={status}
+              onValueChange={(value) =>
+                handleStatusChange(row.original.id, value)
+              }
             >
-                <SelectTrigger className={cn(
-                "w-[140px] h-9 text-[10px] font-black uppercase tracking-[0.15em] rounded-xl border border-white/10 shadow-lg transition-all",
-                status === "pending" ? "bg-amber-500/10 text-amber-500 border-amber-500/20 shadow-amber-500/5" : 
-                status === "in-progress" ? "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-blue-500/5" : 
-                "bg-green-500/10 text-green-500 border-green-500/20 shadow-green-500/5"
-                )}>
+              <SelectTrigger
+                className={cn(
+                  "w-35 h-9 text-[10px] font-black uppercase tracking-[0.15em] rounded-xl border border-white/10 shadow-lg transition-all",
+                  status === "pending"
+                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20 shadow-amber-500/5"
+                    : status === "in-progress"
+                    ? "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-blue-500/5"
+                    : "bg-green-500/10 text-green-500 border-green-500/20 shadow-green-500/5"
+                )}
+              >
                 <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="glass border-white/10 rounded-2xl">
-                <SelectItem value="pending" className="text-[10px] font-black uppercase tracking-widest">Pending</SelectItem>
-                <SelectItem value="in-progress" className="text-[10px] font-black uppercase tracking-widest">In-Progress</SelectItem>
-                <SelectItem value="completed" className="text-[10px] font-black uppercase tracking-widest">Completed</SelectItem>
-                </SelectContent>
+              </SelectTrigger>
+              <SelectContent className="glass border-white/10 rounded-2xl">
+                <SelectItem
+                  value="pending"
+                  className="text-[10px] font-black uppercase tracking-widest"
+                >
+                  Pending
+                </SelectItem>
+                <SelectItem
+                  value="in-progress"
+                  className="text-[10px] font-black uppercase tracking-widest"
+                >
+                  In-Progress
+                </SelectItem>
+                <SelectItem
+                  value="completed"
+                  className="text-[10px] font-black uppercase tracking-widest"
+                >
+                  Completed
+                </SelectItem>
+              </SelectContent>
             </Select>
           </div>
-        )
+        );
       },
     },
     {
       accessorKey: "total_amount",
-      header: () => <div className="uppercase tracking-[0.2em] text-[10px] font-black text-right">Financials</div>,
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black text-right">
+          Financials
+        </div>
+      ),
       cell: ({ row }) => {
-        const total = row.original.total_amount || 0
-        const adv = row.original.advance_payment || 0
-        const fin = row.original.final_payment || 0
+        const total = row.original.total_amount || 0;
+        const adv = row.original.advance_payment || 0;
+        const fin = row.original.final_payment || 0;
         return (
           <div className="text-right">
-            <div className="font-black text-lg text-foreground italic tracking-tight">₹{total.toLocaleString()}</div>
+            <div className="font-black text-lg text-foreground italic tracking-tight">
+              ₹{total.toLocaleString()}
+            </div>
             <div className="flex items-center justify-end gap-2 mt-1">
-                <span className="text-[9px] font-black uppercase text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">ADV: ₹{adv}</span>
-                <span className="text-[9px] font-black uppercase text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">FIN: ₹{fin}</span>
+              <span className="text-[9px] font-black uppercase text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                ADV: ₹{adv}
+              </span>
+              <span className="text-[9px] font-black uppercase text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">
+                FIN: ₹{fin}
+              </span>
             </div>
           </div>
-        )
+        );
       },
     },
     {
       accessorKey: "created_at",
       header: ({ column }) => (
-        <button 
+        <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="flex items-center gap-2 hover:text-amber-500 transition-colors uppercase tracking-[0.2em] text-[10px] font-black ml-auto"
         >
@@ -240,11 +333,15 @@ export default function CustomerSubmissionsTable() {
         </button>
       ),
       cell: ({ row }) => {
-        const date = new Date(row.getValue("created_at"))
-        return <div className="text-right text-[11px] font-bold text-foreground/40 uppercase tracking-widest font-mono">{date.toLocaleDateString('en-GB')}</div>
+        const date = new Date(row.getValue("created_at"));
+        return (
+          <div className="text-right text-[11px] font-bold text-foreground/40 uppercase tracking-widest font-mono">
+            {date.toLocaleDateString("en-GB")}
+          </div>
+        );
       },
     },
-  ]
+  ];
 
   const table = useReactTable({
     data,
@@ -263,7 +360,7 @@ export default function CustomerSubmissionsTable() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="space-y-8">
@@ -271,24 +368,28 @@ export default function CustomerSubmissionsTable() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
         <div className="md:col-span-4 relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-             <Search className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
+            <Search className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
           </div>
           <Input
             placeholder="Search Identity..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
             className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-amber-500/20 font-bold uppercase tracking-widest text-[11px]"
           />
         </div>
 
         <div className="md:col-span-4 relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-             <Mail className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
+            <Mail className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
           </div>
           <Input
             placeholder="Filter Email Node..."
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
+            onChange={(event) =>
+              table.getColumn("email")?.setFilterValue(event.target.value)
+            }
             className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-amber-500/20 font-bold uppercase tracking-widest text-[11px]"
           />
         </div>
@@ -296,19 +397,44 @@ export default function CustomerSubmissionsTable() {
         <div className="md:col-span-4 flex gap-4">
           <div className="flex-1">
             <Select value={timeFilter} onValueChange={setTimeFilter}>
-                <SelectTrigger className="h-14 bg-white/5 border-white/10 rounded-2xl px-6 font-black uppercase tracking-widest text-[10px] text-foreground/60">
-                    <div className="flex items-center gap-3">
-                        <Calendar size={14} className="text-amber-500" />
-                        <SelectValue placeholder="Chronology" />
-                    </div>
-                </SelectTrigger>
-                <SelectContent className="glass border-white/10 rounded-2xl p-2">
-                <SelectItem value="all" className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3">All Time</SelectItem>
-                <SelectItem value="today" className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3">Today</SelectItem>
-                <SelectItem value="month" className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3">This Month</SelectItem>
-                <SelectItem value="quarter" className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3">This Quarter</SelectItem>
-                <SelectItem value="year" className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3">This Year</SelectItem>
-                </SelectContent>
+              <SelectTrigger className="h-14 bg-white/5 border-white/10 rounded-2xl px-6 font-black uppercase tracking-widest text-[10px] text-foreground/60">
+                <div className="flex items-center gap-3">
+                  <Calendar size={14} className="text-amber-500" />
+                  <SelectValue placeholder="Chronology" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="glass border-white/10 rounded-2xl p-2">
+                <SelectItem
+                  value="all"
+                  className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                >
+                  All Time
+                </SelectItem>
+                <SelectItem
+                  value="today"
+                  className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                >
+                  Today
+                </SelectItem>
+                <SelectItem
+                  value="month"
+                  className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                >
+                  This Month
+                </SelectItem>
+                <SelectItem
+                  value="quarter"
+                  className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                >
+                  This Quarter
+                </SelectItem>
+                <SelectItem
+                  value="year"
+                  className="rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                >
+                  This Year
+                </SelectItem>
+              </SelectContent>
             </Select>
           </div>
 
@@ -318,18 +444,23 @@ export default function CustomerSubmissionsTable() {
                 <Layers size={14} className="mr-3 text-amber-500" /> Matrix
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="glass border-white/10 rounded-2xl p-2 min-w-[200px]">
+            <DropdownMenuContent
+              align="end"
+              className="glass border-white/10 rounded-2xl p-2 min-w-50"
+            >
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
                 .map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize rounded-xl font-black uppercase tracking-widest text-[10px] py-3"
+                    className="capitalize rounded-xl font-black  tracking-widest text-[10px] py-3"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
                   >
-                    {column.id.replace('_', ' ')}
+                    {column.id.replace("_", " ")}
                   </DropdownMenuCheckboxItem>
                 ))}
             </DropdownMenuContent>
@@ -339,64 +470,85 @@ export default function CustomerSubmissionsTable() {
 
       {/* Modern High-End Table */}
       <div className="relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-amber-500/20 to-transparent" />
         <Table>
-            <TableHeader>
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="border-white/5 hover:bg-transparent">
+              <TableRow
+                key={headerGroup.id}
+                className="border-white/5 hover:bg-transparent"
+              >
                 {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} className="h-16 px-6">
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
+                  <TableHead key={header.id} className="h-16 px-6">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
                 ))}
-                </TableRow>
+              </TableRow>
             ))}
-            </TableHeader>
-            <TableBody>
+          </TableHeader>
+          <TableBody>
             {isLoading ? (
-                <TableRow>
-                    <td colSpan={columns.length} className="h-64 text-center">
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-500 animate-pulse">Synchronizing Ledger...</p>
-                        </div>
-                    </td>
-                </TableRow>
+              <TableRow>
+                <td colSpan={columns.length} className="h-64 text-center">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-500 animate-pulse">
+                      Synchronizing Ledger...
+                    </p>
+                  </div>
+                </td>
+              </TableRow>
             ) : table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                <TableRow 
-                    key={row.id} 
-                    className={cn(
-                        "group border-white/5 transition-all duration-300",
-                        row.getIsSelected() ? "bg-amber-500/5" : "hover:bg-white/[0.02]"
-                    )}
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  className={cn(
+                    "group border-white/5 transition-all duration-300",
+                    row.getIsSelected()
+                      ? "bg-amber-500/5"
+                      : "hover:bg-white/2"
+                  )}
                 >
-                    {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="px-6 py-8">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </TableCell>
-                    ))}
+                  ))}
                 </TableRow>
-                ))
+              ))
             ) : (
-                <TableRow>
-                <TableCell colSpan={columns.length} className="h-64 text-center">
-                    <div className="flex flex-col items-center gap-6 opacity-20 grayscale">
-                        <Layers size={80} strokeWidth={1} />
-                        <p className="text-2xl font-black uppercase tracking-[0.5em]">Ledger Empty</p>
-                    </div>
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-64 text-center"
+                >
+                  <div className="flex flex-col items-center gap-6 opacity-20 grayscale">
+                    <Layers size={80} strokeWidth={1} />
+                    <p className="text-2xl font-black uppercase tracking-[0.5em]">
+                      Ledger Empty
+                    </p>
+                  </div>
                 </TableCell>
-                </TableRow>
+              </TableRow>
             )}
-            </TableBody>
+          </TableBody>
         </Table>
       </div>
 
       {/* Enhanced Pagination Footnote */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
         <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-foreground/40">
-           <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-           {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} Records Isolated
+          <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} Records Isolated
         </div>
         <div className="flex gap-4">
           <Button
@@ -408,10 +560,10 @@ export default function CustomerSubmissionsTable() {
           >
             Previous Cycle
           </Button>
-          <Button 
-            variant="outline" 
-            size="sm" 
-            onClick={() => table.nextPage()} 
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
             className="h-12 px-6 bg-white/5 border-white/10 hover:bg-white/10 text-foreground/60 font-black uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all active:scale-95 disabled:opacity-20 translate-y-0 hover:-translate-y-0.5"
           >
@@ -420,5 +572,5 @@ export default function CustomerSubmissionsTable() {
         </div>
       </div>
     </div>
-  )
+  );
 }
