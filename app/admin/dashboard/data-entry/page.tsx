@@ -304,7 +304,7 @@ export default function DataEntryPage() {
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
         {/* Form Container - Horizontal Aesthetic */}
         <div className="xl:col-span-5">
-          <Card className="glass sticky top-24 border-white/20 shadow-4xl overflow-hidden group">
+          <Card className="glass sticky top-24 border-white/20 shadow-2xl overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1.5 bg-linear-to-r from-primary to-accent" />
             <CardHeader className="pb-4">
               <CardTitle className="text-2xl font-bold flex items-center gap-3">
@@ -576,9 +576,9 @@ export default function DataEntryPage() {
         </div>
 
         {/* Table Container - Horizontal Grid Style */}
-        <div className="xl:col-span-7 space-y-6">
+        <div className="xl:col-span-7 space-y-6 ">
           <div className="flex flex-col sm:flex-row gap-6 justify-between items-center px-2">
-            <div className="relative w-full sm:w-100 group">
+            <div className="relative w-full sm:w-100 group ">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <Search className="w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
               </div>
@@ -606,7 +606,7 @@ export default function DataEntryPage() {
             )}
           </div>
 
-          <div className="glass rounded-[2.5rem] overflow-hidden border-white/10 shadow-5xl">
+          <div className="glass rounded-[2.5rem] overflow-hidden border-white/10 shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>

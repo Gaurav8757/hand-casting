@@ -228,8 +228,8 @@ export default function GalleryManagement() {
         </div>
         <div className="flex items-center gap-3">
           <div className="bg-primary/10 border border-primary/20 px-4 py-2 rounded-2xl flex items-center gap-2">
-            <ImageIcon className="w-5 h-5 text-primary" />
-            <span className="font-bold text-primary">
+            <ImageIcon className="w-5 h-5 text-accent" />
+            <span className="font-bold text-accent">
               {items.length} Masterpieces
             </span>
           </div>
@@ -238,18 +238,18 @@ export default function GalleryManagement() {
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
         {/* Add/Edit Form - Attractive Horizontal Placement */}
-        <div className="xl:col-span-4">
-          <div className="glass p-8 sticky top-24 border-white/20 shadow-2xl  overflow-hidden group">
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors" />
+        <div className="xl:col-span-5">
+          <div className="glass p-8 sticky top-24 border-white/20 shadow-2xl overflow-hidden group">
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/20 transition-colors" />
 
             <h3 className="text-2xl font-bold text-foreground mb-8 flex items-center gap-3 relative z-10">
               {editingId ? (
                 <div className="p-2 bg-primary/20 rounded-lg">
-                  <Edit2 className="w-6 h-6 text-primary" />
+                  <Edit2 className="w-6 h-6 text-accent" />
                 </div>
               ) : (
                 <div className="p-2 bg-primary/20 rounded-lg">
-                  <Plus className="w-6 h-6 text-primary" />
+                  <Plus className="w-6 h-6 text-accent" />
                 </div>
               )}
               {editingId ? "Refine Creation" : "New Masterpiece"}
@@ -402,8 +402,8 @@ export default function GalleryManagement() {
                     readOnly
                   />
                   <span
-                    className={`block h-7 w-12 rounded-full border-2 border-white/10 transition-colors ${
-                      formData.displayOnLanding ? "bg-primary" : "bg-white/10"
+                    className={`block h-7 w-12 rounded-full border-white/10 transition-colors ${
+                      formData.displayOnLanding ? "bg-linear-to-b from-secondary to-chart-5" : "bg-slate-300"
                     }`}
                   />
                   <span
@@ -431,7 +431,7 @@ export default function GalleryManagement() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-6 py-4 bg-primary hover:bg-primary/90 text-white font-black rounded-2xl hover:shadow-[0_8px_20px_rgba(var(--primary-rgb),0.4)] hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 disabled:transform-none cursor-pointer uppercase tracking-widest text-xs"
+                  className="flex-1 px-6 py-4 bg-linear-to-b from-secondary to-chart-5 hover:bg-primary/90 text-white font-black rounded-2xl hover:shadow-[0_8px_20px_rgba(var(--primary-rgb),0.4)] hover:-translate-y-1 active:translate-y-0 transition-all disabled:opacity-50 disabled:transform-none cursor-pointer uppercase tracking-widest text-xs"
                 >
                   {loading
                     ? "Processing..."
@@ -465,7 +465,7 @@ export default function GalleryManagement() {
         </div>
 
         {/* Gallery Items List Table - Attractive Horizontal */}
-        <div className="xl:col-span-8 space-y-6">
+        <div className="xl:col-span-7 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2">
             <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
               Showroom Inventory
@@ -572,7 +572,7 @@ export default function GalleryManagement() {
                                 alt={item.title}
                                 className="w-full h-full object-cover rounded-2xl border-2 border-white/10 group-hover:border-primary/50 transition-all group-hover:scale-105"
                               />
-                              <div className="absolute -bottom-1 -right-1 bg-primary text-white text-[10px] font-black px-1.5 rounded-full border-2 border-slate-900 flex items-center gap-0.5">
+                              <div className="absolute -bottom-1 -right-1 bg-linear-to-b from-secondary to-chart-5  text-white text-[10px] font-black px-1.5 py-0.5 rounded-full  flex items-center gap-0.5">
                                 <Star size={8} className="fill-white" />
                                 {item.rating}
                               </div>

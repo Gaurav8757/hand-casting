@@ -32,7 +32,7 @@ export default function SubmissionsPage() {
         </div>
       </div>
 
-      <Card className="glass border-white/10 shadow-6xl rounded-[3rem] overflow-hidden">
+      <Card className="glass border-white/10 shadow-2xl rounded-[3rem] overflow-hidden">
         <CardHeader className="p-8 border-b border-white/5 bg-white/1">
           <CardTitle className="text-2xl font-black uppercase tracking-tighter">
             Submission Chronicles

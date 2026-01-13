@@ -212,7 +212,7 @@ export default function AdminDashboardPage() {
 
       {/* Graph Area */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 px-2">
-        <Card className="lg:col-span-2 glass border-white/10 shadow-4xl overflow-hidden">
+        <Card className="lg:col-span-2 glass border-white/10 shadow-2xl overflow-hidden">
           <CardHeader className="p-8 border-b border-white/5 bg-white/1">
             <div className="flex items-center justify-between">
               <div>
@@ -310,7 +310,7 @@ export default function AdminDashboardPage() {
         </Card>
 
         <div className="space-y-8">
-          <Card className="glass border-white/10 shadow-4xl">
+          <Card className="glass border-white/10 shadow-2xl">
             <CardHeader className="p-8 border-b border-white/5 bg-white/1">
               <CardTitle className="text-xl font-black uppercase tracking-tighter flex items-center gap-3">
                 <PieChartIcon className="w-5 h-5 text-primary" />
@@ -354,7 +354,7 @@ export default function AdminDashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="glass border-primary/20 shadow-4xl bg-primary/5 relative overflow-hidden group">
+          <Card className="glass border-primary/20 shadow-2xl bg-primary/5 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-primary/20 transition-colors" />
             <CardContent className="p-8 relative z-10">
               <h4 className="text-xs font-black uppercase tracking-[0.3em] text-primary mb-2">

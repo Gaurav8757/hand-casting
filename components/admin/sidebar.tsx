@@ -127,7 +127,7 @@ export default function Sidebar() {
                     className={cn(
                       "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
                       isActive 
-                        ? "bg-primary shadow-md" 
+                        ? "bg-primary shadow-2xl" 
                         : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                     )}
                   >
@@ -141,18 +141,18 @@ export default function Sidebar() {
 
           {/* User Info & Logout */}
           <div className="p-4 border-t">
-            <div className="flex items-center gap-3 px-4 py-3 mb-4 rounded-lg bg-muted/50">
+            <div className="flex items-center shadow-2xl gap-3 px-4 py-3 mb-4 rounded-lg bg-muted/50">
               <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold">
                 A
               </div>
-              <div className="flex-1 overflow-hidden">
+              <div className="flex-1  overflow-hidden">
                 <p className="text-sm font-medium truncate text-foreground">Admin</p>
                 <p className="text-xs text-muted-foreground truncate">Administrator</p>
               </div>
             </div>
             <Button 
               variant="outline" 
-              className="w-full gap-2 justify-start hover:bg-destructive/10 hover:text-destructive border-destructive/30" 
+              className="w-full gap-2 shadow-2xl justify-start hover:bg-destructive/10 hover:text-destructive border-destructive/30" 
               onClick={handleLogout}
               disabled={isLoading}
             >
