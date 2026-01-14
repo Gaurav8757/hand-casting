@@ -36,7 +36,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="glass mt-20 mx-4 md:mx-8 mb-4 px-8 py-12 bg-muted font-semibold">
+    <footer className="glass mt-20 mx-4 md:mx-8 mb-4 px-8 py-12 bg-muted font-semibold drop-shadow-2xl">
       <div className="max-w-7xl mx-auto ">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 ">
           {/* Brand */}
@@ -159,7 +159,7 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-center text-foreground/60 text-sm">
-            &copy; {currentYear} CastKeep. All rights reserved. | Skin-Safe •
+            &copy; {currentYear} Bloody Boka. All rights reserved. | Skin-Safe •
             Non-Toxic • Proudly Family-Owned |{" "}
             <a href="#contact" className="hover:text-accent transition-colors">
               Contact

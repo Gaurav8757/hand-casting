@@ -76,7 +76,7 @@ export default function ReviewsSection() {
 
   return (
     <section className="py-12 px-4 md:px-8">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto shadow-2xl rounded-2xl">
         <div className="glass p-8 space-y-6">
           <div>
             <h3 className="text-2xl font-bold text-foreground mb-2">

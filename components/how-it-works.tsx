@@ -44,7 +44,7 @@ export default function HowItWorks() {
             return (
               <div key={i} className="relative">
                 <div className="glass p-6 text-center space-y-4 h-full">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center shadow-2xl justify-center mx-auto">
                     <Icon className="text-foreground" size={32} />
                   </div>
                   <div>

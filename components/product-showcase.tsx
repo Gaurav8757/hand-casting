@@ -43,11 +43,11 @@ export default function ProductShowcase() {
           {features.map((feature, i) => (
             <div
               key={i}
-              className="glass p-6 space-y-3 hover:bg-white/40 transition-all duration-300"
+              className="glass p-6 space-y-3 hover:bg-white/40 transition-all duration-300 shadow-2xl"
             >
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0 mt-1">
-                  <Check className="text-foreground" size={20} />
+                <div className="w-10 h-10 rounded-full font-bold bg-primary flex items-center justify-center shrink-0 mt-1">
+                  <Check className="text-foreground" size={20} fontWeight={40}/>
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">

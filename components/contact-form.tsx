@@ -130,7 +130,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="glass p-8 space-y-6" id="contact-form">
+    <div className="glass p-8 space-y-6 shadow-2xl" id="contact-form">
       <h3 className="text-2xl font-bold text-foreground">Send us a Message</h3>
 
       <form onSubmit={handleSubmit} className="space-y-5">

@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { Menu, X, Mail, LogIn } from "lucide-react"
-import Link from "next/link"
 import Image from "next/image"
 import { useIsMobile } from "@/hooks/use-mobile"
+import Link from "next/link"
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,12 +31,12 @@ export default function Navigation() {
             >
               Shop
             </button>
-            <button
+            {/* <button
               onClick={() => scrollToSection("how-it-works")}
               className="text-foreground hover:text-accent transition-colors"
             >
               How It Works
-            </button>
+            </button> */}
             <button
               onClick={() => scrollToSection("gallery")}
               className="text-foreground hover:text-accent transition-colors"
@@ -49,6 +49,17 @@ export default function Navigation() {
             >
               Reviews
             </button>
+            
+                <Link href="/about-us"
+              className="text-foreground hover:text-accent transition-colors"
+            >
+              About Us
+            </Link>
+                  <Link href="/blogs"
+              className="text-foreground hover:text-accent transition-colors"
+            >
+              Blogs
+            </Link>
             
             {/* <div className="flex gap-3 items-center border-l pl-8 border-white/20">
           
@@ -109,6 +120,16 @@ export default function Navigation() {
             >
               Reviews
             </button>
+               <Link href="/about-us"
+             className="block w-full text-left px-4 py-2 hover:text-accent hover:bg-secondary/20 rounded-lg transition-colors"
+            >
+              About Us
+            </Link>
+                  <Link href="/blogs"
+                className="block w-full text-left px-4 py-2 hover:text-accent hover:bg-secondary/20 rounded-lg transition-colors"
+            >
+              Blogs
+            </Link>
             <button
               onClick={() => scrollToSection("contact")}
              className="glass px-6 py-2 text-accent hover:bg-white/60 transition-all flex items-center gap-2"

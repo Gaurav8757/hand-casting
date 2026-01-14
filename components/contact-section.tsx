@@ -24,17 +24,17 @@ export default function ContactSection() {
               {/* Phone */}
               <a
                 href="tel:+917003020846"
-                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group"
+                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group shadow-2xl"
               >
                 <div className="p-3 bg-accent/20 rounded-lg group-hover:scale-110 transition-transform">
                   <Phone className="text-accent" size={24} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">
-                    Call Us
+                    Call Us   <sup className="text-xs text-foreground/60 mt-1">24*7 IST</sup>
                   </h3>
                   <p className="text-foreground/70">+91 70030 20846</p>
-                  <p className="text-xs text-foreground/60 mt-1">24*7 IST</p>
+                
                 </div>
               </a>
 
@@ -43,7 +43,7 @@ export default function ContactSection() {
                 href="https://wa.me/7003020846"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group"
+                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group shadow-2xl"
               >
                 <div className="p-3 bg-primary/20 rounded-lg group-hover:scale-110 transition-transform">
                   <MessageCircle className="text-primary" size={24} />
@@ -61,14 +61,14 @@ export default function ContactSection() {
               {/* Email */}
               <a
                 href="mailto:support@castkeep.com"
-                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group"
+                className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group shadow-2xl"
               >
                 <div className="p-3 bg-accent/20 rounded-lg group-hover:scale-110 transition-transform">
                   <Mail className="text-accent" size={24} />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                  <p className="text-foreground/70">support@castkeep.com</p>
+                  <p className="text-foreground/70">support@bloodyboka.com</p>
                   <p className="text-xs text-foreground/60 mt-1">
                     Response within 24 hours
                   </p>
@@ -76,7 +76,7 @@ export default function ContactSection() {
               </a>
 
               {/* Shipping */}
-              <div className="glass p-6 flex items-start gap-4">
+              <div className="glass p-6 flex items-start gap-4 shadow-2xl">
                 <div className="p-3 bg-accent/20 rounded-lg">
                   <Truck className="text-accent" size={24} />
                 </div>

@@ -102,11 +102,11 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
-              className="glass p-6 space-y-4 hover:bg-white/40 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 duration-500"
+              className="glass shadow-2xl p-6 space-y-4 hover:bg-white/40 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex gap-1">
@@ -136,15 +136,15 @@ export default function Testimonials() {
 
         {/* Trust Section */}
         <div className="mt-16 grid md:grid-cols-3 gap-6">
-          <div className="glass p-6 text-center space-y-2">
+          <div className="glass p-6 text-center space-y-2 shadow-2xl">
             <div className="text-3xl font-bold text-accent">5,000+</div>
             <p className="text-foreground/70">Happy Customers</p>
           </div>
-          <div className="glass p-6 text-center space-y-2">
+          <div className="glass p-6 text-center space-y-2 shadow-2xl">
             <div className="text-3xl font-bold text-accent">4.9★</div>
             <p className="text-foreground/70">Average Rating</p>
           </div>
-          <div className="glass p-6 text-center space-y-2">
+          <div className="glass p-6 text-center space-y-2 shadow-2xl">
             <div className="text-3xl font-bold text-accent">98%</div>
             <p className="text-foreground/70">Would Recommend</p>
           </div>

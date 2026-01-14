@@ -7,7 +7,7 @@ export default function HeroProduct() {
     <section className="min-h-screen flex items-center justify-center pt-20 px-4 md:px-8">
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
         {/* Left: Content */}
-        <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-1000">
+        <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-1000 ">
           <div className="space-y-4">
             <div className="inline-block px-4 py-2 bg-accent/20 rounded-full text-accent font-medium text-sm">
               ✨ Premium Hand Casting Kit
@@ -75,8 +75,8 @@ export default function HeroProduct() {
         </div>
 
         {/* Right: Product Image */}
-        <div className="relative animate-in fade-in slide-in-from-right-8 duration-1000">
-          <div className="relative w-full aspect-square rounded-2xl overflow-hidden glass">
+        <div className="relative animate-in fade-in slide-in-from-right-8 duration-1000 ">
+          <div className="relative w-full aspect-square rounded-2xl overflow-hidden glass shadow-2xl">
             <img
               src="/premium-hand-casting-kit-with-molds-and-tools.jpg"
               alt="Hand Casting Kit Contents - Create Beautiful 3D Hand Sculptures"
