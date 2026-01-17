@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 export default function HeroProduct() {
   return (
     <section className="min-h-screen flex items-center justify-center pt-20">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center px-6 mt-4 md:mt-0 md:px-0">
         {/* Left: Content */}
         <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-1000 ">
           <div className="space-y-4">

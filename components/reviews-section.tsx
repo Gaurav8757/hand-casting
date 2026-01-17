@@ -75,7 +75,7 @@ export default function ReviewsSection() {
   }
 
   return (
-    <section className="pl-4 md:pl-8">
+    <section className=" md:pl-8">
       <div className="max-w-2xl mx-auto shadow-2xl rounded-2xl">
         <div className="glass p-8 space-y-6">
           <div>

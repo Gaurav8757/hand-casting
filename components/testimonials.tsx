@@ -102,7 +102,7 @@ export default function Testimonials() {
             Thousands of customers have created lasting memories with CastKeep
           </p>
         </div>
-        <div className="flex">
+        <div className="flex flex-col md:flex-row gap-6">
           <div>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 ">
               {testimonials.map((testimonial, index) => (

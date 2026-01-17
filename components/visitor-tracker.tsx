@@ -7,7 +7,7 @@ export default function VisitorTracker() {
   const pathname = usePathname()
 
   useEffect(() => {
-    fetch("/api/tracker", {
+    fetch("/api/admin/tracker", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ page: pathname })
