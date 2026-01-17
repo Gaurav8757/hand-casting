@@ -103,7 +103,7 @@ export default function Testimonials() {
           </p>
         </div>
         <div className="flex flex-col md:flex-row gap-6">
-          <div>
+          <div className="overflow-y-auto h-[540px] rounded-xl p-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 ">
               {testimonials.map((testimonial, index) => (
                 <div
@@ -111,17 +111,7 @@ export default function Testimonials() {
                   className="glass shadow-2xl p-4 space-y-4 hover:bg-white/40 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex gap-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <span key={i} className="text-accent text-lg">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="text-foreground/80 italic">"{testimonial.content}"</p>
-
-                  <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                     <div className="flex items-center gap-4 pt-4 border-t border-white/10">
                     <img
                       src={testimonial.image || "/placeholder.svg"}
                       alt={testimonial.name}
@@ -132,6 +122,17 @@ export default function Testimonials() {
                       <p className="text-sm text-foreground/60">{testimonial.role}</p>
                     </div>
                   </div>
+                  <div className="flex gap-1">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className="text-accent text-lg">
+                        ★
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-foreground/80 italic">"{testimonial.content}"</p>
+
+               
                 </div>
               ))}
             </div>

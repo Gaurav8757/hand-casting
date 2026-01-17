@@ -49,7 +49,6 @@ export default function Home() {
       <HowItWorks />
       <Gallery />
       <Testimonials />
-   
       <ContactSection />
       <Footer />
     </main>

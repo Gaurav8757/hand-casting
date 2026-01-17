@@ -131,7 +131,7 @@ export default function BlogDetailPage() {
 
       {/* Hero Section */}
       <article className="pt-32 pb-20 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Back Button */}
           <Link
             href="/blogs"
@@ -217,7 +217,7 @@ export default function BlogDetailPage() {
 
       {/* Related Blogs */}
       {relatedBlogs.length > 0 && (
-        <section className="pb-20 px-4 md:px-8 bg-muted/20">
+        <section className="py-10 px-4 md:px-8 bg-muted/20">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-foreground mb-8">Related Articles</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
