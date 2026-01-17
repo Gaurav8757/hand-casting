@@ -210,16 +210,16 @@ export default function CustomerSubmissionsTable() {
         <div className="space-y-1">
           <a
             href={`tel:${row.original.mobile_number}`}
-            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-accent transition-colors"
           >
-            <Phone size={10} className="text-primary/50" />
+            <Phone size={10} className="text-accent" />
             {row.original.mobile_number}
           </a>
           <a
             href={`mailto:${row.original.email}`}
-            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-primary transition-colors"
+            className="flex items-center gap-2 text-xs font-bold text-foreground/60 hover:text-accent transition-colors"
           >
-            <Mail size={10} className="text-primary/50" />
+            <Mail size={10} className="text-accent" />
             {row.original.email}
           </a>
         </div>
@@ -259,7 +259,7 @@ export default function CustomerSubmissionsTable() {
                 className={cn(
                   "w-35 h-9 text-[10px] font-black uppercase tracking-[0.15em] rounded-xl border border-white/10 shadow-lg transition-all",
                   status === "pending"
-                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20 shadow-amber-500/5"
+                    ? "bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20 shadow-muted-foreground/5"
                     : status === "in-progress"
                     ? "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-blue-500/5"
                     : "bg-green-500/10 text-green-500 border-green-500/20 shadow-green-500/5"
@@ -309,7 +309,7 @@ export default function CustomerSubmissionsTable() {
               ₹{total.toLocaleString()}
             </div>
             <div className="flex items-center justify-end gap-2 mt-1">
-              <span className="text-[9px] font-black uppercase text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+              <span className="text-[9px] font-black uppercase text-muted-foreground bg-muted/10 px-1.5 py-0.5 rounded">
                 ADV: ₹{adv}
               </span>
               <span className="text-[9px] font-black uppercase text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded">
@@ -325,9 +325,9 @@ export default function CustomerSubmissionsTable() {
       header: ({ column }) => (
         <button
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 hover:text-amber-500 transition-colors uppercase tracking-[0.2em] text-[10px] font-black ml-auto"
+          className="flex items-center gap-2 hover:text-muted-foreground transition-colors uppercase tracking-[0.2em] text-[10px] font-black ml-auto"
         >
-          <Calendar size={12} className="text-amber-500" />
+          <Calendar size={12} className="text-muted-foreground" />
           Timestamp
           <ArrowUpDown className="h-3 w-3" />
         </button>
@@ -368,7 +368,7 @@ export default function CustomerSubmissionsTable() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
         <div className="md:col-span-4 relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
+            <Search className="w-4 h-4 text-foreground/30 group-focus-within:text-accent transition-colors" />
           </div>
           <Input
             placeholder="Search Identity..."
@@ -376,13 +376,13 @@ export default function CustomerSubmissionsTable() {
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
             }
-            className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-amber-500/20 font-bold uppercase tracking-widest text-[11px]"
+            className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-accent font-bold uppercase tracking-widest text-[11px]"
           />
         </div>
 
         <div className="md:col-span-4 relative group">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Mail className="w-4 h-4 text-foreground/30 group-focus-within:text-amber-500 transition-colors" />
+            <Mail className="w-4 h-4 text-foreground/30 group-focus-within:text-accent transition-colors" />
           </div>
           <Input
             placeholder="Filter Email Node..."
@@ -390,7 +390,7 @@ export default function CustomerSubmissionsTable() {
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
             }
-            className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-amber-500/20 font-bold uppercase tracking-widest text-[11px]"
+            className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-accent font-bold uppercase tracking-widest text-[11px]"
           />
         </div>
 
@@ -399,7 +399,7 @@ export default function CustomerSubmissionsTable() {
             <Select value={timeFilter} onValueChange={setTimeFilter}>
               <SelectTrigger className="h-14 bg-white/5 border-white/10 rounded-2xl px-6 font-black uppercase tracking-widest text-[10px] text-foreground/60">
                 <div className="flex items-center gap-3">
-                  <Calendar size={14} className="text-amber-500" />
+                  <Calendar size={14} className="text-muted-foreground" />
                   <SelectValue placeholder="Chronology" />
                 </div>
               </SelectTrigger>
@@ -441,7 +441,7 @@ export default function CustomerSubmissionsTable() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button className="h-14 bg-white/5 hover:bg-white/10 border-white/10 text-foreground/60 font-black uppercase tracking-widest text-[10px] rounded-2xl px-6">
-                <Layers size={14} className="mr-3 text-amber-500" /> Matrix
+                <Layers size={14} className="mr-3 text-accent" /> Matrix
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -470,7 +470,7 @@ export default function CustomerSubmissionsTable() {
 
       {/* Modern High-End Table */}
       <div className="relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-amber-500/20 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/60 to-transparent" />
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -496,8 +496,8 @@ export default function CustomerSubmissionsTable() {
               <TableRow>
                 <td colSpan={columns.length} className="h-64 text-center">
                   <div className="flex flex-col items-center gap-4">
-                    <div className="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin" />
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-amber-500 animate-pulse">
+                    <div className="w-10 h-10 border-4 border-accent/20 border-t-accent rounded-full animate-spin" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-accent animate-pulse">
                       Synchronizing Ledger...
                     </p>
                   </div>
@@ -510,8 +510,8 @@ export default function CustomerSubmissionsTable() {
                   className={cn(
                     "group border-white/5 transition-all duration-300",
                     row.getIsSelected()
-                      ? "bg-amber-500/5"
-                      : "hover:bg-white/2"
+                      ? "bg-muted-foreground/5"
+                      : "hover:bg-gray-500/2"
                   )}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -546,7 +546,7 @@ export default function CustomerSubmissionsTable() {
       {/* Enhanced Pagination Footnote */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
         <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-foreground/40">
-          <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-muted-foreground animate-pulse" />
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} Records Isolated
         </div>

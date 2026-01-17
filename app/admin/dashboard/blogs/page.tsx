@@ -296,7 +296,7 @@ export default function BlogsManagement() {
                       {blog.tags.slice(0, 3).map((tag, i) => (
                         <span
                           key={i}
-                          className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full"
+                          className="px-2 py-1 bg-muted text-muted-foreground text-xs font-bold rounded-full"
                         >
                           {tag}
                         </span>

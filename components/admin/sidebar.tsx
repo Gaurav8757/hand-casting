@@ -56,6 +56,11 @@ const menuItems = [
     href: "/admin/dashboard/blogs",
     icon: FileText,
   },
+    {
+    title: "Carousel",
+    href: "/admin/dashboard/carousel",
+    icon: FileText,
+  },
 ]
 
 export default function Sidebar() {

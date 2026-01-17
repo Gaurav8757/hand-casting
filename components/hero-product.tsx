@@ -1,8 +1,28 @@
 "use client";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import ProductCarousel from "./admin/carousel";
+
+const carouselImages = [
+  {
+    src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+    alt: "Premium Hand Casting Kit - Image 1",
+    slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+  },
+  {
+    src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+    alt: "Premium Hand Casting Kit - Image 2",
+    slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+  },
+  {
+    src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+    alt: "Premium Hand Casting Kit - Image 3",
+    slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
+  },
+];
 
 export default function HeroProduct() {
+
   return (
     <section className="min-h-screen flex items-center justify-center pt-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center px-6 mt-4 md:mt-0 md:px-0">
@@ -76,12 +96,8 @@ export default function HeroProduct() {
 
         {/* Right: Product Image */}
         <div className="relative animate-in fade-in slide-in-from-right-8 duration-1000 ">
-          <div className="relative w-full aspect-square rounded-2xl overflow-hidden glass shadow-2xl">
-            <img
-              src="/premium-hand-casting-kit-with-molds-and-tools.jpg"
-              alt="Hand Casting Kit Contents - Create Beautiful 3D Hand Sculptures"
-              className="w-full h-full object-cover"
-            />
+          <div className="relative w-full aspect-square rounded-2xl overflow-hidden  shadow-2xl">
+            <ProductCarousel carouselImages={carouselImages} />
           </div>
           <div className="absolute -bottom-4 -right-4 glass p-4 rounded-xl max-w-xs">
             <p className="text-sm font-semibold text-foreground">
@@ -96,8 +112,8 @@ export default function HeroProduct() {
             </ul>
           </div>
         </div>
-      </div>
 
+      </div>
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <ChevronDown className="text-accent" size={32} />
