@@ -50,7 +50,7 @@ export default function Home() {
       <HowItWorks />
       <Gallery />
       <Testimonials />
-      <ReviewsSection />
+   
       <ContactSection />
       <Footer />
     </main>

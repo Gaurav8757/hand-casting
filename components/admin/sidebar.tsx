@@ -12,7 +12,8 @@ import {
   PlusCircle,
   Menu, 
   X, 
-  LayoutDashboard
+  LayoutDashboard,
+  FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -49,6 +50,11 @@ const menuItems = [
     title: "Reviews",
     href: "/admin/dashboard/reviews",
     icon: Star,
+  },
+  {
+    title: "Blogs",
+    href: "/admin/dashboard/blogs",
+    icon: FileText,
   },
 ]
 

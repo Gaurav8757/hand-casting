@@ -5,11 +5,20 @@ import { Menu, X, Mail, LogIn } from "lucide-react"
 import Image from "next/image"
 import { useIsMobile } from "@/hooks/use-mobile"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const isMobile = useIsMobile();
+  const pathname = usePathname()
+  const router = useRouter()
+
   const scrollToSection = (id: string) => {
+    if (pathname !== "/") {
+      router.push(`/#${id}`)
+      setIsOpen(false)
+      return
+    }
     const element = document.getElementById(id)
     element?.scrollIntoView({ behavior: "smooth" })
     setIsOpen(false)
