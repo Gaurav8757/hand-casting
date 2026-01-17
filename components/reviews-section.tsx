@@ -42,7 +42,6 @@ export default function ReviewsSection() {
     e.preventDefault();
 
     if (!validateForm()) return;
-
     setLoading(true);
 
     try {

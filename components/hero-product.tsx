@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import ProductCarousel from "./admin/carousel";
+import { createBrowserClient } from "@supabase/ssr";
+import { useEffect, useState } from "react";
 
-const carouselImages = [
+const defaultCarouselImages = [
   {
     src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
     alt: "Premium Hand Casting Kit - Image 1",
@@ -22,6 +24,30 @@ const carouselImages = [
 ];
 
 export default function HeroProduct() {
+  const [carouselImages, setCarouselImages] = useState(defaultCarouselImages);
+
+  useEffect(() => {
+    async function fetchCarouselImages() {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
+      try {
+        const { data, error } = await supabase
+          .from("carousel_items")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (data && data.length > 0) {
+          setCarouselImages(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch carousel images:", error);
+      }
+    }
+    fetchCarouselImages();
+  }, []);
 
   return (
     <section className="min-h-screen flex items-center justify-center pt-20">

@@ -9,7 +9,7 @@ import Image from "next/image";
 
 export default function ProductCarousel({ carouselImages }: { carouselImages: any }) {
   const router = useRouter();
- const plugin = useRef(
+  const plugin = useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   )
   return (
@@ -21,14 +21,25 @@ export default function ProductCarousel({ carouselImages }: { carouselImages: an
         <CarouselContent>
           {carouselImages.map((item: any, index: number) => (
             <CarouselItem key={index}>
-              <div onClick={() => router.push(item.slug)}>
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      className="w-full h-full object-cover"
-                      width={500}
-                      height={500}
-                    />
+              <div onClick={() => router.push(item.slug)} className="cursor-pointer h-full">
+                {item.media_type === "video" ? (
+                  <video
+                    src={item.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover"
+                    width={500}
+                    height={500}
+                  />
+                )}
               </div>
             </CarouselItem>
           ))}
