@@ -222,17 +222,23 @@ export default function DataEntryPage() {
   };
 
   const handleEdit = (item: any) => {
-    setFormData({
-      name: item.name || "",
-      mobile_number: item.mobile_number || "",
-      email: item.email || "",
-      address: item.address || "",
-      inquiry_type: item.inquiry_type || "general",
-      message: item.message || "",
-      advance_payment: Number(item.advance_payment) || 0,
-      final_payment: Number(item.final_payment) || 0,
-      submission_status: item.submission_status || "pending",
-    });
+    if (!item) return;
+
+  console.log("FORM DATA:", formData);
+
+  setFormData(prev => ({
+  ...prev,
+  name: item.name ?? "",
+  mobile_number: item.mobile_number ?? "",
+  email: item.email ?? "",
+  address: item.address ?? "",
+  inquiry_type: item.inquiry_type ?? "general",
+  message: item.message ?? "",
+  advance_payment: Number(item.advance_payment ?? 0),
+  final_payment: Number(item.final_payment ?? 0),
+  submission_status: item.submission_status ?? "pending",
+}));
+
     setErrors({});
     setEditingId(item.id);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -337,7 +343,7 @@ export default function DataEntryPage() {
                     required
                     value={formData.name}
                     onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
+                   setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
                     className="bg-white/5 border-white/10 h-12 rounded-2xl focus:ring-primary/40 font-semibold text-base transition-all"
                     placeholder="e.g., Alexander Mercer"
@@ -362,10 +368,7 @@ export default function DataEntryPage() {
                       required
                       value={formData.mobile_number}
                       onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          mobile_number: e.target.value,
-                        })
+                        setFormData((prev) => ({ ...prev, mobile_number: e.target.value }))
                       }
                       className="bg-white/5 border-white/10 h-11 rounded-xl focus:ring-primary/30 font-medium"
                       placeholder="+91..."
@@ -389,7 +392,7 @@ export default function DataEntryPage() {
                       required
                       value={formData.email}
                       onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
+                        setFormData((prev) => ({ ...prev, email: e.target.value }))
                       }
                       className="bg-white/5 border-white/10 h-11 rounded-xl focus:ring-primary/30 font-medium"
                       placeholder="name@domain.com"
@@ -413,7 +416,7 @@ export default function DataEntryPage() {
                     id="address"
                     value={formData.address}
                     onChange={(e) =>
-                      setFormData({ ...formData, address: e.target.value })
+                      setFormData((prev) => ({ ...prev, address: e.target.value }))
                     }
                     className="bg-white/5 border-white/10 h-12 rounded-2xl focus:ring-primary/30 font-medium"
                     placeholder="Suite, Street, City..."
@@ -428,7 +431,7 @@ export default function DataEntryPage() {
                     <Select
                       value={formData.inquiry_type}
                       onValueChange={(val) =>
-                        setFormData({ ...formData, inquiry_type: val })
+                        setFormData((prev) => ({ ...prev, inquiry_type: val }))
                       }
                     >
                       <SelectTrigger className="bg-white/5 border-white/10 h-11 rounded-xl cursor-pointer font-medium hover:bg-white/10 transition-colors">
@@ -449,7 +452,7 @@ export default function DataEntryPage() {
                     <Select
                       value={formData.submission_status}
                       onValueChange={(val) =>
-                        setFormData({ ...formData, submission_status: val })
+                        setFormData((prev) => ({ ...prev, submission_status: val }))
                       }
                     >
                       <SelectTrigger className="bg-white/5 border-white/10 h-11 rounded-xl cursor-pointer font-medium hover:bg-white/10 transition-colors">
@@ -480,10 +483,10 @@ export default function DataEntryPage() {
                         type="number"
                         value={formData.advance_payment}
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
+                          setFormData((prev) => ({
+                            ...prev,
                             advance_payment: Number(e.target.value),
-                          })
+                          }))
                         }
                         className="bg-white/5 border-primary/20 h-10 rounded-xl focus:ring-primary/50 font-bold"
                       />
@@ -505,10 +508,10 @@ export default function DataEntryPage() {
                         type="number"
                         value={formData.final_payment}
                         onChange={(e) =>
-                          setFormData({
-                            ...formData,
+                          setFormData((prev) => ({
+                            ...prev,
                             final_payment: Number(e.target.value),
-                          })
+                          }))
                         }
                         className="bg-white/5 border-primary/20 h-10 rounded-xl focus:ring-primary/50 font-bold"
                       />
@@ -540,7 +543,7 @@ export default function DataEntryPage() {
                     id="msg"
                     value={formData.message}
                     onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
+                      setFormData((prev) => ({ ...prev, message: e.target.value }))
                     }
                     className="bg-white/5 border-white/10 resize-none min-h-20 rounded-2xl focus:ring-primary/30 font-medium"
                     placeholder="Encrypted notes for internal use..."
@@ -780,14 +783,14 @@ export default function DataEntryPage() {
                     System is requesting confirmation to erase entity:{" "}
                     <strong>{deleteName}</strong>.
                   </p>
-                  <div className="bg-slate-900/50 p-6 rounded-4xl border border-white/10 space-y-2 text-left shadow-inner">
+                  {/* <div className="bg-slate-900/50 p-6 rounded-4xl border border-white/10 space-y-2 text-left shadow-inner">
                     <div className="flex items-center gap-2 text-[10px] font-black text-primary/50 uppercase tracking-[0.2em]">
                       <Info size={12} /> Secure Hardware ID
                     </div>
                     <code className="text-xs text-primary/80 font-mono break-all font-bold block bg-black/20 p-3 rounded-xl">
                       {deleteId}
                     </code>
-                  </div>
+                  </div> */}
                 </div>
               )}
             </AlertDialogDescription>

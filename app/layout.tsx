@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   description:
     "Create beautiful, skin-safe 3D hand casting sculptures. Preserve precious memories with our complete hand casting kit. Perfect for families, couples, and special moments.",
   keywords: "hand casting kit, family keepsakes, 3D hand mold, couple gifts, memory preservation",
-  creator: "CastKeep",
-  publisher: "CastKeep",
+  creator: "Bloody Boka",
+  publisher: "Bloody Boka",
   robots: "index, follow",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://castkeep.com",
+    url: "https://bloodyboka.com",
     title: "Premium 3D Hand Casting Kit | Create Family Keepsakes",
     description:
       "Create beautiful, skin-safe 3D hand casting sculptures. Preserve precious moments with our complete kit.",
@@ -27,9 +27,11 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "CastKeep Hand Casting Kit",
+        alt: "Bloody Boka Hand Casting Kit",
       },
     ],
+    siteName: "Bloody Boka"
+    
   },
   twitter: {
     card: "summary_large_image",
@@ -47,15 +49,15 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
+        url: "/logo.png",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: "/logo.png",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: "/logo.svg",
         type: "image/svg+xml",
       },
     ],
