@@ -245,6 +245,7 @@ export default function ContactForm() {
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
+              maxLength={10}
               placeholder="+91 70030 20846"
               className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
             />
