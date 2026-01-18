@@ -1,8 +1,16 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle, AlertCircle } from "lucide-react";
+import { createBrowserClient } from "@supabase/ssr";
+import { MultipleSelector, type Option } from "@/components/ui/multiple-selector";
+import { Label } from "@/components/ui/label";
+
+interface ProductFeature {
+  id: string;
+  title: string;
+}
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -11,20 +19,55 @@ export default function ContactForm() {
     mobileNumber: "",
     address: "",
     inquiryType: "general-question",
+    serviceTypes: [] as string[],
     message: "",
+    commitmentAccepted: false,
   });
+  const [productFeatures, setProductFeatures] = useState<ProductFeature[]>([]);
+  const [selectedServices, setSelectedServices] = useState<Option[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchProductFeatures();
+  }, []);
+
+  async function fetchProductFeatures() {
+    try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
+      const { data, error } = await supabase
+        .from("product_features")
+        .select("id, title")
+        .eq("is_active", true)
+        .order("display_order", { ascending: true });
+
+      if (error) throw error;
+      setProductFeatures(data || []);
+    } catch (error) {
+      console.error("Error fetching product features:", error);
+    }
+  }
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => {
@@ -33,6 +76,14 @@ export default function ContactForm() {
         return newErrors;
       });
     }
+  };
+
+  const handleServiceChange = (options: Option[]) => {
+    setSelectedServices(options);
+    setFormData((prev) => ({
+      ...prev,
+      serviceTypes: options.map(opt => opt.value)
+    }));
   };
 
   const validateForm = () => {
@@ -58,6 +109,10 @@ export default function ContactForm() {
     else if (formData.message.trim().length < 10)
       newErrors.message = "Please provide a bit more detail (min 10 chars)";
 
+    if (!formData.commitmentAccepted) {
+      newErrors.commitmentAccepted = "Please accept the commitment to proceed";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -80,7 +135,9 @@ export default function ContactForm() {
           mobileNumber: formData.mobileNumber,
           address: formData.address,
           inquiryType: formData.inquiryType,
+          serviceTypes: formData.serviceTypes,
           message: formData.message,
+          commitmentAccepted: formData.commitmentAccepted,
         }),
       });
 
@@ -96,7 +153,9 @@ export default function ContactForm() {
         mobileNumber: "",
         address: "",
         inquiryType: "general-question",
+        serviceTypes: [],
         message: "",
+        commitmentAccepted: false,
       });
       setErrors({});
 
@@ -122,7 +181,7 @@ export default function ContactForm() {
             Thanks for reaching out!
           </h3>
           <p className="text-foreground/70">
-            We'll respond to your inquiry within 24 hours.
+            Sayan or Sujay will get in touch with you personally within 24 hours.
           </p>
         </div>
       </div>
@@ -226,6 +285,19 @@ export default function ContactForm() {
           </select>
         </div>
 
+        {/* Service Type Multi-Select */}
+        <div className="space-y-2">
+          <Label htmlFor="service-types">Service Type (Select Multiple)</Label>
+          <MultipleSelector
+            value={selectedServices}
+            defaultOptions={productFeatures.map(f => ({ value: f.title, label: f.title }))}
+            onChange={handleServiceChange}
+            placeholder="Select services you're interested in..."
+            emptyIndicator={<p className="text-center text-sm text-foreground/50">No services available</p>}
+            className="w-full"
+          />
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">
             Message *
@@ -242,6 +314,32 @@ export default function ContactForm() {
           {errors.message && (
             <p className="text-xs text-red-400 mt-1 font-medium">
               {errors.message}
+            </p>
+          )}
+        </div>
+
+        {/* Commitment Checkbox */}
+        <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <input
+              type="checkbox"
+              name="commitmentAccepted"
+              checked={formData.commitmentAccepted}
+              onChange={handleChange}
+              className="mt-1 w-5 h-5 rounded border-white/20 bg-white/10 text-primary focus:ring-2 focus:ring-primary/40 cursor-pointer"
+            />
+            <div className="flex-1">
+              <p className="text-sm text-foreground leading-relaxed">
+                <span className="font-semibold">I understand: </span>
+                Don't worry, your memories are in safe hands. Once you submit this,
+                <span className="font-bold text-accent"> Sayan or Sujay </span>
+                will get in touch with you personally within 24 hours to finalize the details.
+              </p>
+            </div>
+          </label>
+          {errors.commitmentAccepted && (
+            <p className="text-xs text-red-400 mt-2 font-medium ml-8">
+              {errors.commitmentAccepted}
             </p>
           )}
         </div>

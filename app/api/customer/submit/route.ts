@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, mobileNumber, email, address, inquiryType, message } = await request.json()
+    const { name, mobileNumber, email, address, inquiryType, serviceTypes, message, commitmentAccepted } = await request.json()
 
     const supabase = await createClient()
 
@@ -15,7 +15,9 @@ export async function POST(request: NextRequest) {
         email,
         address,
         inquiry_type: inquiryType,
+        service_types: serviceTypes || [],
         message,
+        commitment_accepted: commitmentAccepted || false,
         submission_status: "pending",
       })
       .select()

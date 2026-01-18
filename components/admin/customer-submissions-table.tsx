@@ -59,7 +59,9 @@ export type CustomerSubmission = {
   email: string;
   address: string;
   inquiry_type: string;
+  service_types: string[];
   message: string;
+  commitment_accepted: boolean;
   submission_status: "pending" | "completed" | "in-progress";
   advance_payment: number;
   final_payment: number;
@@ -239,6 +241,61 @@ export default function CustomerSubmissionsTable() {
       ),
     },
     {
+      accessorKey: "service_types",
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black">
+          Services
+        </div>
+      ),
+      cell: ({ row }) => {
+        const services = row.original.service_types || [];
+        return (
+          <div className="flex flex-wrap gap-1 max-w-xs">
+            {services.length > 0 ? (
+              services.map((service, idx) => (
+                <span
+                  key={idx}
+                  className="inline-flex px-2 py-0.5 bg-accent/10 border border-accent/20 rounded text-[9px] font-bold uppercase tracking-wider text-accent"
+                >
+                  {service}
+                </span>
+              ))
+            ) : (
+              <span className="text-[10px] text-foreground/30 italic">None</span>
+            )}
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "commitment_accepted",
+      header: () => (
+        <div className="uppercase tracking-[0.2em] text-[10px] font-black text-center">
+          Commitment
+        </div>
+      ),
+      cell: ({ row }) => {
+        const accepted = row.original.commitment_accepted;
+        return (
+          <div className="flex justify-center">
+            {accepted ? (
+              <div className="w-6 h-6 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center">
+                <svg className="w-3 h-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            ) : (
+              <div className="w-6 h-6 rounded-full bg-red-500/20 border-2 border-red-500 flex items-center justify-center">
+                <svg className="w-3 h-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+            )}
+          </div>
+        );
+      },
+    },
+    {
       accessorKey: "submission_status",
       header: () => (
         <div className="uppercase tracking-[0.2em] text-[10px] font-black text-center">
@@ -261,8 +318,8 @@ export default function CustomerSubmissionsTable() {
                   status === "pending"
                     ? "bg-muted-foreground/10 text-muted-foreground border-muted-foreground/20 shadow-muted-foreground/5"
                     : status === "in-progress"
-                    ? "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-blue-500/5"
-                    : "bg-green-500/10 text-green-500 border-green-500/20 shadow-green-500/5"
+                      ? "bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-blue-500/5"
+                      : "bg-green-500/10 text-green-500 border-green-500/20 shadow-green-500/5"
                 )}
               >
                 <SelectValue />
@@ -483,9 +540,9 @@ export default function CustomerSubmissionsTable() {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
