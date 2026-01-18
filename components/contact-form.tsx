@@ -190,80 +190,84 @@ export default function ContactForm() {
 
   return (
     <div className="glass p-8 space-y-6 shadow-2xl" id="contact-form">
-      <h3 className="text-2xl font-bold text-foreground">Send us a Message</h3>
+      <h3 className="text-3xl font-bold text-accent">Send us a Message</h3>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Full Name *
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Your name"
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
-          />
-          {errors.name && (
-            <p className="text-xs text-red-400 mt-1 font-medium">
-              {errors.name}
-            </p>
-          )}
+        <div className="flex gap-4 justify-between">
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Your name"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+            />
+            {errors.name && (
+              <p className="text-xs text-red-400 mt-1 font-medium">
+                {errors.name}
+              </p>
+            )}
+          </div>
+
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="your@email.com"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+            />
+            {errors.email && (
+              <p className="text-xs text-red-400 mt-1 font-medium">
+                {errors.email}
+              </p>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Email Address *
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder="your@email.com"
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
-          />
-          {errors.email && (
-            <p className="text-xs text-red-400 mt-1 font-medium">
-              {errors.email}
-            </p>
-          )}
-        </div>
+        <div className="flex gap-4 justify-between">
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Mobile Number
+            </label>
+            <input
+              type="tel"
+              name="mobileNumber"
+              value={formData.mobileNumber}
+              onChange={handleChange}
+              placeholder="+91 70030 20846"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+            />
+            {errors.mobileNumber && (
+              <p className="text-xs text-red-400 mt-1 font-medium">
+                {errors.mobileNumber}
+              </p>
+            )}
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Mobile Number
-          </label>
-          <input
-            type="tel"
-            name="mobileNumber"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-            placeholder="+91 70030 20846"
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
-          />
-          {errors.mobileNumber && (
-            <p className="text-xs text-red-400 mt-1 font-medium">
-              {errors.mobileNumber}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            Address
-          </label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="Your shipping address"
-            className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
-          />
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="Your shipping address"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-foreground placeholder:text-foreground/50 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+            />
+          </div>
         </div>
 
         <div>
@@ -286,7 +290,7 @@ export default function ContactForm() {
         </div>
 
         {/* Service Type Multi-Select */}
-        <div className="space-y-2">
+        <div className=" space-y-2">
           <Label htmlFor="service-types">Service Type (Select Multiple)</Label>
           <MultipleSelector
             value={selectedServices}
