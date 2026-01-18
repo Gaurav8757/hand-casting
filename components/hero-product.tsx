@@ -10,17 +10,7 @@ const defaultCarouselImages = [
     src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
     alt: "Premium Hand Casting Kit - Image 1",
     slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
-  },
-  {
-    src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
-    alt: "Premium Hand Casting Kit - Image 2",
-    slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
-  },
-  {
-    src: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
-    alt: "Premium Hand Casting Kit - Image 3",
-    slug: "/premium-hand-casting-kit-with-molds-and-tools.jpg",
-  },
+  }
 ];
 
 export default function HeroProduct() {

@@ -11,12 +11,11 @@ import {
     Trash,
     Plus,
     ImageIcon,
-    Info,
-    Link as LinkIcon,
-    Type,
     Upload,
     Loader2,
-    Video,
+    Package,
+    ArrowUp,
+    ArrowDown,
 } from "lucide-react";
 import {
     AlertDialog,
@@ -29,13 +28,24 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export default function CarouselManagement() {
+interface ProductFeature {
+    id: string;
+    title: string;
+    description: string;
+    detailed_description: string | null;
+    image_url: string | null;
+    display_order: number;
+    is_active: boolean;
+    created_at: string;
+}
+
+export default function ProductFeaturesManagement() {
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
-    const [items, setItems] = useState<any[]>([]);
+    const [features, setFeatures] = useState<ProductFeature[]>([]);
     const [loading, setLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -45,52 +55,38 @@ export default function CarouselManagement() {
     const [isBulkDelete, setIsBulkDelete] = useState(false);
 
     const [formData, setFormData] = useState({
-        src: "",
-        alt: "",
-        slug: "",
-        media_type: "image", // 'image' | 'video'
+        title: "",
+        description: "",
+        detailed_description: "",
+        image_url: "",
+        display_order: 0,
+        is_active: true,
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
-        // Check authentication status
-        const checkAuth = async () => {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            if (error) {
-                console.error("Auth error:", error);
-            }
-            if (!session) {
-                console.warn("No active session found. User may not be authenticated.");
-            } else {
-                console.log("Authenticated user:", session.user.id);
-            }
-        };
-
-        checkAuth();
-        fetchCarouselItems();
+        fetchFeatures();
     }, []);
 
-    async function fetchCarouselItems() {
+    async function fetchFeatures() {
         try {
             const { data, error } = await supabase
-                .from("carousel_items")
+                .from("product_features")
                 .select("*")
-                .order("created_at", { ascending: false });
+                .order("display_order", { ascending: true });
 
             if (error) throw error;
-            setItems(data || []);
+            setFeatures(data || []);
         } catch (error) {
-            console.error("Error fetching carousel items:", error);
+            console.error("Error fetching product features:", error);
         }
     }
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
-        if (!formData.src.trim()) newErrors.src = "Image/Video URL is required";
-
-        if (!formData.alt.trim()) newErrors.alt = "Alt/Title text is required";
-        if (!formData.slug.trim()) newErrors.slug = "Link/Slug is required";
+        if (!formData.title.trim()) newErrors.title = "Title is required";
+        if (!formData.description.trim()) newErrors.description = "Description is required";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -107,24 +103,19 @@ export default function CarouselManagement() {
         setUploading(true);
 
         try {
-            // Determine media type
-            const isVideo = file.type.startsWith('video/');
-            const mediaType = isVideo ? 'video' : 'image';
-
             const { error: uploadError } = await supabase.storage
-                .from('carousel-media')
+                .from('product-features')
                 .upload(filePath, file);
 
             if (uploadError) throw uploadError;
 
             const { data: { publicUrl } } = supabase.storage
-                .from('carousel-media')
+                .from('product-features')
                 .getPublicUrl(filePath);
 
             setFormData(prev => ({
                 ...prev,
-                src: publicUrl,
-                media_type: mediaType
+                image_url: publicUrl
             }));
 
         } catch (error) {
@@ -144,15 +135,17 @@ export default function CarouselManagement() {
 
         try {
             const payload = {
-                src: formData.src,
-                alt: formData.alt,
-                slug: formData.slug,
-                media_type: formData.media_type,
+                title: formData.title,
+                description: formData.description,
+                detailed_description: formData.detailed_description || null,
+                image_url: formData.image_url || null,
+                display_order: formData.display_order,
+                is_active: formData.is_active,
             };
 
             if (editingId) {
                 const { data, error } = await supabase
-                    .from("carousel_items")
+                    .from("product_features")
                     .update(payload)
                     .eq("id", editingId)
                     .select();
@@ -164,12 +157,12 @@ export default function CarouselManagement() {
                         hint: error.hint,
                         code: error.code,
                     });
-                    throw new Error(error.message || "Failed to update carousel item");
+                    throw new Error(error.message || "Failed to update feature");
                 }
                 console.log("Update successful:", data);
             } else {
                 const { data, error } = await supabase
-                    .from("carousel_items")
+                    .from("product_features")
                     .insert(payload)
                     .select();
 
@@ -180,23 +173,25 @@ export default function CarouselManagement() {
                         hint: error.hint,
                         code: error.code,
                     });
-                    throw new Error(error.message || "Failed to create carousel item");
+                    throw new Error(error.message || "Failed to create feature");
                 }
                 console.log("Insert successful:", data);
             }
 
             setFormData({
-                src: "",
-                alt: "",
-                slug: "",
-                media_type: "image",
+                title: "",
+                description: "",
+                detailed_description: "",
+                image_url: "",
+                display_order: 0,
+                is_active: true,
             });
             setErrors({});
             setEditingId(null);
-            await fetchCarouselItems();
+            await fetchFeatures();
         } catch (error: any) {
-            console.error("Error saving carousel item:", error);
-            alert(error.message || "Error saving carousel item");
+            console.error("Error saving feature:", error);
+            alert(error.message || "Error saving feature");
         } finally {
             setLoading(false);
         }
@@ -212,16 +207,16 @@ export default function CarouselManagement() {
 
         try {
             const { error } = await supabase
-                .from("carousel_items")
+                .from("product_features")
                 .delete()
                 .eq("id", deleteId);
 
             if (error) throw error;
-            await fetchCarouselItems();
+            await fetchFeatures();
             setSelectedIds(selectedIds.filter((id) => id !== deleteId));
         } catch (error) {
-            console.error("Error deleting carousel item:", error);
-            alert("Error deleting item");
+            console.error("Error deleting feature:", error);
+            alert("Error deleting feature");
         } finally {
             setDeleteId(null);
             setDeleteName(null);
@@ -233,16 +228,16 @@ export default function CarouselManagement() {
 
         try {
             const { error } = await supabase
-                .from("carousel_items")
+                .from("product_features")
                 .delete()
                 .in("id", selectedIds);
 
             if (error) throw error;
-            await fetchCarouselItems();
+            await fetchFeatures();
             setSelectedIds([]);
         } catch (error) {
-            console.error("Error deleting carousel items:", error);
-            alert("Error deleting items");
+            console.error("Error deleting features:", error);
+            alert("Error deleting features");
         } finally {
             setDeleteId(null);
             setDeleteName(null);
@@ -250,29 +245,59 @@ export default function CarouselManagement() {
         }
     }
 
-    function handleEdit(item: any) {
+    function handleEdit(feature: ProductFeature) {
         setFormData({
-            src: item.src,
-            alt: item.alt,
-            slug: item.slug,
-            media_type: item.media_type || "image",
+            title: feature.title,
+            description: feature.description,
+            detailed_description: feature.detailed_description || "",
+            image_url: feature.image_url || "",
+            display_order: feature.display_order,
+            is_active: feature.is_active,
         });
         setErrors({});
-        setEditingId(item.id);
+        setEditingId(feature.id);
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    async function handleReorder(id: string, direction: 'up' | 'down') {
+        const currentIndex = features.findIndex(f => f.id === id);
+        if (currentIndex === -1) return;
+
+        const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+        if (targetIndex < 0 || targetIndex >= features.length) return;
+
+        const newFeatures = [...features];
+        [newFeatures[currentIndex], newFeatures[targetIndex]] = [newFeatures[targetIndex], newFeatures[currentIndex]];
+
+        // Update display_order for both items
+        try {
+            await supabase
+                .from("product_features")
+                .update({ display_order: targetIndex })
+                .eq("id", features[currentIndex].id);
+
+            await supabase
+                .from("product_features")
+                .update({ display_order: currentIndex })
+                .eq("id", features[targetIndex].id);
+
+            await fetchFeatures();
+        } catch (error) {
+            console.error("Error reordering:", error);
+        }
+    }
+
     const toggleSelectAll = () => {
-        if (selectedIds.length === items.length) {
+        if (selectedIds.length === features.length) {
             setSelectedIds([]);
         } else {
-            setSelectedIds(items.map((item) => item.id));
+            setSelectedIds(features.map((feature) => feature.id));
         }
     };
 
     const toggleSelectOne = (id: string) => {
         if (selectedIds.includes(id)) {
-            setSelectedIds(selectedIds.filter((itemId) => itemId !== id));
+            setSelectedIds(selectedIds.filter((featureId) => featureId !== id));
         } else {
             setSelectedIds([...selectedIds, id]);
         }
@@ -283,17 +308,17 @@ export default function CarouselManagement() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 className="text-4xl font-extrabold text-foreground tracking-tight">
-                        Carousel Manager
+                        Product Features Manager
                     </h2>
                     <p className="text-foreground/60 text-lg">
-                        Manage the hero section carousel images.
+                        Manage the "What's Inside" section features.
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="bg-primary/10 border border-primary/20 px-4 py-2 rounded-2xl flex items-center gap-2">
-                        <ImageIcon className="w-5 h-5 text-accent" />
+                        <Package className="w-5 h-5 text-accent" />
                         <span className="font-bold text-accent">
-                            {items.length} Slides
+                            {features.length} Features
                         </span>
                     </div>
                 </div>
@@ -315,106 +340,139 @@ export default function CarouselManagement() {
                                     <Plus className="w-6 h-6 text-accent" />
                                 </div>
                             )}
-                            {editingId ? "Edit Slide" : "New Slide"}
+                            {editingId ? "Edit Feature" : "New Feature"}
                         </h3>
 
                         <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
-
-                            {/* Media Upload */}
+                            {/* Image Upload */}
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1 flex items-center gap-1">
-                                    <Upload size={12} /> Upload Media
+                                    <Upload size={12} /> Upload Image
                                 </label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="file"
-                                        accept="image/*,video/*"
-                                        onChange={handleFileUpload}
-                                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-                                    />
-                                </div>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileUpload}
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                                />
                                 {uploading && (
                                     <div className="text-xs text-accent font-bold flex items-center gap-2 mt-2">
-                                        <Loader2 className="animate-spin w-3 h-3" /> Uploading media...
+                                        <Loader2 className="animate-spin w-3 h-3" /> Uploading image...
+                                    </div>
+                                )}
+                                {formData.image_url && (
+                                    <div className="mt-2">
+                                        <img src={formData.image_url} alt="Preview" className="w-32 h-32 object-cover rounded-lg border-2 border-white/10" />
                                     </div>
                                 )}
                             </div>
 
-                            {/* Image URL (Pre-filled by upload or manual) */}
+                            {/* Image URL */}
                             <div className="space-y-1.5">
                                 <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1 flex items-center gap-1">
-                                    <ImageIcon size={12} /> Image/Video URL
+                                    <ImageIcon size={12} /> Image URL
                                 </label>
                                 <input
                                     type="text"
-                                    required
-                                    value={formData.src}
+                                    value={formData.image_url}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, src: e.target.value })
+                                        setFormData({ ...formData, image_url: e.target.value })
                                     }
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
                                     placeholder="Paste URL or upload file above"
                                 />
-                                {errors.src && (
-                                    <p className="text-[10px] font-black uppercase text-red-500 ml-1 mt-1">
-                                        {errors.src}
-                                    </p>
-                                )}
                             </div>
 
-                            {/* Media Type Indicator (Read Only) */}
+                            {/* Title */}
                             <div className="space-y-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1 flex items-center gap-1">
-                                    Detected Type
-                                </label>
-                                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-xl border border-white/10">
-                                    {formData.media_type === 'video' ? <Video size={16} className="text-accent" /> : <ImageIcon size={16} className="text-accent" />}
-                                    <span className="text-sm font-bold uppercase">{formData.media_type}</span>
-                                </div>
-                            </div>
-
-                            {/* Alt Text (Title) */}
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1 flex items-center gap-1">
-                                    <Type size={12} /> Title / Alt Text
+                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1">
+                                    Title *
                                 </label>
                                 <input
                                     type="text"
                                     required
-                                    value={formData.alt}
+                                    value={formData.title}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, alt: e.target.value })
-                                    }
-                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:bg-white/10 transition-all font-medium"
-                                    placeholder="e.g., Premium Kit"
-                                />
-                                {errors.alt && (
-                                    <p className="text-[10px] font-black uppercase text-red-500 ml-1 mt-1">
-                                        {errors.alt}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Slug / Link */}
-                            <div className="space-y-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1 flex items-center gap-1">
-                                    <LinkIcon size={12} /> Target Link (Slug)
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.slug}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, slug: e.target.value })
+                                        setFormData({ ...formData, title: e.target.value })
                                     }
                                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
-                                    placeholder="e.g., /premium-kit or https://..."
+                                    placeholder="e.g., 1800g Molding Powder"
                                 />
-                                {errors.slug && (
+                                {errors.title && (
                                     <p className="text-[10px] font-black uppercase text-red-500 ml-1 mt-1">
-                                        {errors.slug}
+                                        {errors.title}
                                     </p>
                                 )}
+                            </div>
+
+                            {/* Short Description */}
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1">
+                                    Short Description *
+                                </label>
+                                <textarea
+                                    required
+                                    value={formData.description}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, description: e.target.value })
+                                    }
+                                    rows={2}
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium resize-none"
+                                    placeholder="Brief description for tab"
+                                />
+                                {errors.description && (
+                                    <p className="text-[10px] font-black uppercase text-red-500 ml-1 mt-1">
+                                        {errors.description}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Detailed Description */}
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1">
+                                    Detailed Description
+                                </label>
+                                <textarea
+                                    value={formData.detailed_description}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, detailed_description: e.target.value })
+                                    }
+                                    rows={3}
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium resize-none"
+                                    placeholder="Detailed description for content panel"
+                                />
+                            </div>
+
+                            {/* Display Order */}
+                            <div className="space-y-1.5">
+                                <label className="text-xs font-bold uppercase tracking-wider text-foreground/50 ml-1">
+                                    Display Order
+                                </label>
+                                <input
+                                    type="number"
+                                    value={formData.display_order}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })
+                                    }
+                                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-foreground placeholder-foreground/20 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all font-medium"
+                                    placeholder="0"
+                                />
+                            </div>
+
+                            {/* Active Toggle */}
+                            <div className="flex items-center gap-3">
+                                <input
+                                    type="checkbox"
+                                    id="is_active"
+                                    checked={formData.is_active}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, is_active: e.target.checked })
+                                    }
+                                    className="w-5 h-5 rounded border-white/10 bg-white/5 text-primary focus:ring-2 focus:ring-primary/40"
+                                />
+                                <label htmlFor="is_active" className="text-sm font-medium text-foreground cursor-pointer">
+                                    Active (visible on frontend)
+                                </label>
                             </div>
 
                             <div className="flex gap-4 pt-4">
@@ -427,7 +485,7 @@ export default function CarouselManagement() {
                                         ? "Processing..."
                                         : editingId
                                             ? "Save Changes"
-                                            : "Add Slide"}
+                                            : "Add Feature"}
                                 </button>
                                 {editingId && (
                                     <button
@@ -435,10 +493,12 @@ export default function CarouselManagement() {
                                         onClick={() => {
                                             setEditingId(null);
                                             setFormData({
-                                                src: "",
-                                                alt: "",
-                                                slug: "",
-                                                media_type: "image",
+                                                title: "",
+                                                description: "",
+                                                detailed_description: "",
+                                                image_url: "",
+                                                display_order: 0,
+                                                is_active: true,
                                             });
                                         }}
                                         className="px-6 py-4 bg-white/5 text-foreground font-bold rounded-2xl hover:bg-white/10 transition-all cursor-pointer uppercase tracking-widest text-xs"
@@ -451,13 +511,13 @@ export default function CarouselManagement() {
                     </div>
                 </div>
 
-                {/* Carousel Items List Table */}
+                {/* Features List Table */}
                 <div className="xl:col-span-7 space-y-6">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2">
                         <h3 className="text-2xl font-bold text-foreground flex items-center gap-3">
-                            Active Slides
+                            All Features
                             <span className="text-sm font-normal text-foreground/40 px-2 py-0.5 bg-white/5 rounded-full">
-                                {items.length} items
+                                {features.length} items
                             </span>
                         </h3>
                         {selectedIds.length > 0 && (
@@ -485,8 +545,8 @@ export default function CarouselManagement() {
                                                 onClick={toggleSelectAll}
                                                 className="text-foreground transition-all cursor-pointer hover:scale-110 active:scale-95"
                                             >
-                                                {selectedIds.length === items.length &&
-                                                    items.length > 0 ? (
+                                                {selectedIds.length === features.length &&
+                                                    features.length > 0 ? (
                                                     <div className="p-1.5 bg-primary rounded-md">
                                                         <CheckSquare className="w-5 h-5 text-white" />
                                                     </div>
@@ -496,6 +556,9 @@ export default function CarouselManagement() {
                                                     </div>
                                                 )}
                                             </button>
+                                        </th>
+                                        <th className="p-6 font-bold text-xs uppercase tracking-widest text-foreground/50">
+                                            Order
                                         </th>
                                         <th className="p-6 font-bold text-xs uppercase tracking-widest text-foreground/50">
                                             Preview
@@ -509,30 +572,30 @@ export default function CarouselManagement() {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-white/5">
-                                    {items.length === 0 ? (
+                                    {features.length === 0 ? (
                                         <tr>
-                                            <td colSpan={4} className="p-20 text-center">
+                                            <td colSpan={5} className="p-20 text-center">
                                                 <div className="flex flex-col items-center gap-4 text-foreground/30">
-                                                    <ImageIcon size={64} strokeWidth={1} />
+                                                    <Package size={64} strokeWidth={1} />
                                                     <p className="text-xl font-medium">
-                                                        No slides yet.
+                                                        No features yet.
                                                     </p>
                                                 </div>
                                             </td>
                                         </tr>
                                     ) : (
-                                        items.map((item) => (
+                                        features.map((feature, index) => (
                                             <tr
-                                                key={item.id}
-                                                className={`group hover:bg-white/5 transition-all duration-300 ${selectedIds.includes(item.id) ? "bg-primary/5" : ""
+                                                key={feature.id}
+                                                className={`group hover:bg-white/5 transition-all duration-300 ${selectedIds.includes(feature.id) ? "bg-primary/5" : ""
                                                     }`}
                                             >
                                                 <td className="p-6">
                                                     <button
-                                                        onClick={() => toggleSelectOne(item.id)}
+                                                        onClick={() => toggleSelectOne(feature.id)}
                                                         className="text-foreground transition-all cursor-pointer hover:scale-110 active:scale-95"
                                                     >
-                                                        {selectedIds.includes(item.id) ? (
+                                                        {selectedIds.includes(feature.id) ? (
                                                             <div className="p-1.5 bg-primary rounded-md">
                                                                 <CheckSquare className="w-5 h-5 text-white" />
                                                             </div>
@@ -544,35 +607,56 @@ export default function CarouselManagement() {
                                                     </button>
                                                 </td>
                                                 <td className="p-6">
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="font-bold text-foreground">{feature.display_order}</span>
+                                                        <div className="flex gap-1">
+                                                            <button
+                                                                onClick={() => handleReorder(feature.id, 'up')}
+                                                                disabled={index === 0}
+                                                                className="p-1 bg-white/10 rounded hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                            >
+                                                                <ArrowUp size={12} />
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleReorder(feature.id, 'down')}
+                                                                disabled={index === features.length - 1}
+                                                                className="p-1 bg-white/10 rounded hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed"
+                                                            >
+                                                                <ArrowDown size={12} />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td className="p-6">
                                                     <div className="relative w-24 h-16 shrink-0 bg-black/20 rounded-lg overflow-hidden flex items-center justify-center">
-                                                        {item.media_type === 'video' ? (
-                                                            <Video className="text-white/50" />
-                                                        ) : (
+                                                        {feature.image_url ? (
                                                             <img
-                                                                src={item.src || "/placeholder.svg"}
-                                                                alt={item.alt}
+                                                                src={feature.image_url}
+                                                                alt={feature.title}
                                                                 className="w-full h-full object-cover rounded-lg border-2 border-white/10 group-hover:border-primary/50 transition-all group-hover:scale-105"
                                                             />
+                                                        ) : (
+                                                            <ImageIcon className="text-white/30" size={24} />
                                                         )}
                                                     </div>
                                                 </td>
                                                 <td className="p-6">
                                                     <div className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-                                                        {item.alt}
+                                                        {feature.title}
                                                     </div>
-                                                    <div className="text-sm text-foreground/40 font-medium truncate max-w-[200px]">
-                                                        {item.slug}
+                                                    <div className="text-sm text-foreground/40 font-medium truncate max-w-[300px]">
+                                                        {feature.description}
                                                     </div>
-                                                    <div className="mt-1">
-                                                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 bg-white/10 rounded text-foreground/60">
-                                                            {item.media_type || 'image'}
+                                                    <div className="mt-1 flex gap-2">
+                                                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${feature.is_active ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
+                                                            {feature.is_active ? 'Active' : 'Inactive'}
                                                         </span>
                                                     </div>
                                                 </td>
                                                 <td className="p-6 text-right">
                                                     <div className="flex justify-end gap-3 translate-x-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
                                                         <button
-                                                            onClick={() => handleEdit(item)}
+                                                            onClick={() => handleEdit(feature)}
                                                             className="w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-primary hover:text-white text-foreground/70 rounded-xl transition-all cursor-pointer shadow-lg"
                                                             title="Edit"
                                                         >
@@ -580,8 +664,8 @@ export default function CarouselManagement() {
                                                         </button>
                                                         <button
                                                             onClick={() => {
-                                                                setDeleteId(item.id);
-                                                                setDeleteName(item.alt);
+                                                                setDeleteId(feature.id);
+                                                                setDeleteName(feature.title);
                                                                 setIsBulkDelete(false);
                                                             }}
                                                             className="w-10 h-10 flex items-center justify-center bg-red-500/10 hover:bg-red-500 hover:text-white text-red-500 rounded-xl transition-all cursor-pointer shadow-lg"
@@ -612,7 +696,7 @@ export default function CarouselManagement() {
                             <Trash2 className="w-8 h-8 text-red-500" />
                         </div>
                         <AlertDialogTitle className="text-2xl font-black text-foreground">
-                            {isBulkDelete ? "Mass Delete" : "Delete Slide?"}
+                            {isBulkDelete ? "Mass Delete" : "Delete Feature?"}
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-foreground/60 text-base py-2">
                             {isBulkDelete ? (
@@ -625,16 +709,8 @@ export default function CarouselManagement() {
                                 <div className="space-y-3">
                                     <p>
                                         This will permanently erase <strong>{deleteName}</strong>{" "}
-                                        from the carousel.
+                                        from the product features.
                                     </p>
-                                    {/* <div className="bg-white/5 p-3 rounded-xl border border-white/10 space-y-1">
-                                        <div className="flex items-center gap-2 text-[10px] font-bold text-foreground/40 uppercase tracking-widest">
-                                            <Info size={10} /> ID
-                                        </div>
-                                        <code className="text-[11px] text-amber-500 font-mono break-all">
-                                            {deleteId}
-                                        </code>
-                                    </div> */}
                                 </div>
                             )}
                         </AlertDialogDescription>

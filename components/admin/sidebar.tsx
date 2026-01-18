@@ -13,7 +13,8 @@ import {
   Menu, 
   X, 
   LayoutDashboard,
-  FileText
+  FileText,
+  Package
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -61,6 +62,11 @@ const menuItems = [
     href: "/admin/dashboard/carousel",
     icon: FileText,
   },
+  {
+    title: "Product Features",
+    href: "/admin/dashboard/product-features",
+    icon: Package
+  }
 ]
 
 export default function Sidebar() {

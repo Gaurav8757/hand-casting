@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { useRef } from "react";

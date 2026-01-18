@@ -8,70 +8,89 @@ import {
   TabsContent,
 } from "@/components/ui/tabs";
 import Image from "next/image";
-// 🔥 Dynamic data stored outside
+import { useState, useEffect } from "react";
+import { createBrowserClient } from "@supabase/ssr";
 
-export const productTabs = [
-  {
-    value: "features",
-    label: "Features",
-    content: "features", // This tells component to load features array
-  },
-  {
-    value: "details",
-    label: "Details",
-    content: (
-      <div className="space-y-3">
-        <p className="text-foreground/70 text-sm leading-relaxed">
-          Create memorable 3D hand casting sculptures with premium materials.
-        </p>
-        <p className="text-foreground/70 text-sm leading-relaxed">
-          Safe, non-toxic, perfect for gifts & milestone celebrations.
-        </p>
-      </div>
-    ),
-  },
-  {
-    value: "kit",
-    label: "What's Inside",
-    content: (
-      <ul className="text-sm text-foreground/80 space-y-2">
-        <li>✓ 1800g Premium Molding Powder</li>
-        <li>✓ High-Grade Casting Stone</li>
-        <li>✓ Wooden Display Base</li>
-        <li>✓ Gloves & Bucket</li>
-        <li>✓ Precision Tools</li>
-        <li>✓ Finishing Sandpaper</li>
-      </ul>
-    ),
-  },
-];
-
-export const featureList = [
-  {
-    title: "1800g Molding Powder",
-    desc: "Create detailed, professional-quality molds",
-  },
-  {
-    title: "Casting Stone",
-    desc: "Mix to create beautiful, lasting sculptures",
-  },
-  {
-    title: "Premium Tools",
-    desc: "Precision sticks and detailing instruments",
-  },
-  { title: "Bucket & Gloves", desc: "Everything needed for clean casting" },
-  {
-    title: "Sandpaper & Finishers",
-    desc: "Polish and refine your final sculpture",
-  },
-  {
-    title: "Wooden Base",
-    desc: "Display-ready with optional personalized engraving",
-  },
-];
-
+interface ProductFeature {
+  id: string;
+  title: string;
+  description: string;
+  detailed_description: string | null;
+  image_url: string | null;
+  display_order: number;
+  is_active: boolean;
+}
 
 export default function ProductShowcase() {
+  const [features, setFeatures] = useState<ProductFeature[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeatures();
+  }, []);
+
+  async function fetchFeatures() {
+    try {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+
+      const { data, error } = await supabase
+        .from("product_features")
+        .select("*")
+        .eq("is_active", true)
+        .order("display_order", { ascending: true });
+
+      if (error) throw error;
+      setFeatures(data || []);
+    } catch (error) {
+      console.error("Error fetching product features:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <section id="product" className="py-20 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+              What's Inside
+            </h2>
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+              Everything you need to create beautiful hand cast sculptures
+            </p>
+          </div>
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (features.length === 0) {
+    return (
+      <section id="product" className="py-20 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+              What's Inside
+            </h2>
+            <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+              Everything you need to create beautiful hand cast sculptures
+            </p>
+          </div>
+          <div className="text-center py-20 text-foreground/50">
+            No features available at the moment.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="product" className="py-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
@@ -85,51 +104,53 @@ export default function ProductShowcase() {
         </div>
 
         {/* TABS */}
-        <Tabs defaultValue="features" className="w-full h-full">
+        <Tabs defaultValue={features[0]?.title} className="w-full h-full">
           <TabsList className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 w-full h-full overflow-y-auto p-5">
-            {featureList.map((feature, i) => (
-    <TabsTrigger
-  key={i}
-  value={feature.title}
-  className="glass w-full p-5 hover:bg-white/50 transition-all flex items-center gap-4 rounded-xl shadow-2xl text-left"
->
-  {/* FIXED ICON WRAPPER */}
-  <div className="min-w-10 min-h-10 max-w-10 max-h-10 flex items-center justify-center rounded-full bg-lime-300/80 border border-lime-400 shadow-sm">
-    <Check size={18} className="text-foreground" strokeWidth={2.5} />
-  </div>
+            {features.map((feature) => (
+              <TabsTrigger
+                key={feature.id}
+                value={feature.title}
+                className="glass w-full p-5 hover:bg-white/50 transition-all flex items-center gap-4 rounded-xl shadow-2xl text-left">
+                {/* FIXED ICON WRAPPER */}
+                <div className="min-w-10 min-h-10 max-w-10 max-h-10 flex items-center justify-center rounded-full bg-lime-300/80 border border-lime-400 shadow-sm">
+                  <Check size={18} className="text-foreground" strokeWidth={2.5} />
+                </div>
 
-  {/* TEXT */}
-  <div className="flex flex-col">
-    <h3 className="font-semibold text-foreground leading-tight">
-      {feature.title}
-    </h3>
-    <p className="text-sm text-foreground/70 leading-snug">
-      {feature.desc}
-    </p>
-  </div>
-</TabsTrigger>
-
-
+                {/* TEXT */}
+                <div className="flex flex-col">
+                  <h3 className="font-semibold text-foreground leading-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-foreground/70 leading-snug">
+                    {feature.description}
+                  </p>
+                </div>
+              </TabsTrigger>
             ))}
           </TabsList>
 
-          {featureList.map((feature, i) => (
+          {features.map((feature) => (
             <TabsContent
-              key={i}
+              key={feature.id}
               value={feature.title}
-              className="w-full h-full pt-6"
-            >
-              <div className="glass p-8 rounded-xl shadow-xl grid md:grid-cols-2 gap-8 items-center  bg-primary/5">
+              className="w-full h-full pt-6">
+              <div className="glass p-8 rounded-xl shadow-xl grid md:grid-cols-2 gap-8 items-center bg-primary/5">
 
                 {/* LEFT — Image */}
                 <div className="flex items-center justify-center">
-                  <Image
-                    src={`/images/inside/inside-${i + 1}.png`}
-                    alt={feature.title}
-                    width={450}
-                    height={450}
-                    className="rounded-xl object-cover"
-                  />
+                  {feature.image_url ? (
+                    <img
+                      src={feature.image_url}
+                      alt={feature.title}
+                      width={450}
+                      height={450}
+                      className="rounded-xl object-cover"
+                    />
+                  ) : (
+                    <div className="w-[450px] h-[450px] bg-white/5 rounded-xl flex items-center justify-center text-foreground/30">
+                      No image
+                    </div>
+                  )}
                 </div>
 
                 {/* RIGHT — Text Details */}
@@ -138,11 +159,13 @@ export default function ProductShowcase() {
                     {feature.title}
                   </h2>
                   <p className="text-foreground/70 text-base leading-relaxed">
-                    {feature.desc}
+                    {feature.description}
                   </p>
-                  <p className="text-foreground/60 text-sm">
-                    Create detailed, professional-quality molds with our premium kit.
-                  </p>
+                  {feature.detailed_description && (
+                    <p className="text-foreground/60 text-sm">
+                      {feature.detailed_description}
+                    </p>
+                  )}
                 </div>
 
               </div>
