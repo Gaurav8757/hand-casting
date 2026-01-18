@@ -193,7 +193,7 @@ export default function ContactForm() {
       <h3 className="text-3xl font-bold text-accent">Send us a Message</h3>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="flex gap-4 justify-between">
+        <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Full Name *
@@ -235,7 +235,7 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="flex gap-4 justify-between">
+        <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               Mobile Number
@@ -291,7 +291,7 @@ export default function ContactForm() {
         </div>
 
         {/* Service Type Multi-Select */}
-        <div className=" space-y-2">
+        <div className="space-y-4">
           <Label htmlFor="service-types">Service Type (Select Multiple)</Label>
           <MultipleSelector
             value={selectedServices}

@@ -121,7 +121,7 @@ export default function ProductShowcase() {
                   <h3 className="font-semibold text-foreground leading-tight">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-foreground/70 leading-snug">
+                  <p className="text-sm text-foreground/70 leading-snug text-wrap">
                     {feature.description}
                   </p>
                 </div>
