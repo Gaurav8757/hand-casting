@@ -11,6 +11,24 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient()
+
+    // Check if any admin already exists
+    const { data: existingAdmins, error: checkError } = await supabase
+      .from("admin_users")
+      .select("id")
+      .limit(1)
+
+    if (checkError) {
+      return NextResponse.json({ error: "Database error" }, { status: 500 })
+    }
+
+    // If admin already exists, block registration
+    if (existingAdmins && existingAdmins.length > 0) {
+      return NextResponse.json({ 
+        error: "Admin registration is disabled. An admin account already exists." 
+      }, { status: 403 })
+    }
+
     const passwordHash = await bcryptjs.hash(password, 10)
 
     const { data, error } = await supabase

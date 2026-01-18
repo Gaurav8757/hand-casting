@@ -83,16 +83,16 @@ export default function AdminLoginPage() {
                   <p className="text-sm text-destructive">{error}</p>
                 </div>
               )}
-              <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : "" }`} disabled={isLoading}>
-                {isLoading ? <Loader2 size={20} className=" animate-spin"/> : "Login"}
+              <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : ""}`} disabled={isLoading}>
+                {isLoading ? <Loader2 size={20} className=" animate-spin" /> : "Login"}
               </Button>
             </form>
-            <div className="mt-4 text-center text-sm text-foreground/70">
+            {/* <div className="mt-4 text-center text-sm text-foreground/70">
               {"Don't have an account? "}
               <Link href="/admin/register" className="text-secondary hover:underline underline-offset-4">
                 Register
               </Link>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </div>

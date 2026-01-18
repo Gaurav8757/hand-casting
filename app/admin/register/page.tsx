@@ -2,14 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { Loader2 } from "lucide-react"
+import { Loader2, ShieldAlert } from "lucide-react"
 
 export default function AdminRegisterPage() {
   const [name, setName] = useState("")
@@ -18,7 +18,28 @@ export default function AdminRegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [registrationDisabled, setRegistrationDisabled] = useState(false)
+  const [checkingStatus, setCheckingStatus] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    // Check if registration is allowed
+    checkRegistrationStatus()
+  }, [])
+
+  async function checkRegistrationStatus() {
+    try {
+      const response = await fetch("/api/admin/register", {
+        method: "HEAD",
+      })
+      // If we get 403, registration is disabled
+      setRegistrationDisabled(response.status === 403)
+    } catch (err) {
+      console.error("Error checking registration status:", err)
+    } finally {
+      setCheckingStatus(false)
+    }
+  }
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,6 +72,41 @@ export default function AdminRegisterPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (checkingStatus) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
+
+  if (registrationDisabled) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <div className="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+              <ShieldAlert className="w-8 h-8 text-red-500" />
+            </div>
+            <CardTitle className="text-2xl text-center">Registration Disabled</CardTitle>
+            <CardDescription className="text-center">
+              Admin registration is currently disabled. An admin account already exists.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center">
+              <Link href="/admin/login">
+                <Button className="w-full">
+                  Go to Login
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
   }
 
   return (
@@ -107,8 +163,8 @@ export default function AdminRegisterPage() {
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : "" }`} disabled={isLoading}>
-              {isLoading ? <Loader2 size={20} className=" animate-spin"/> : "Register"}
+            <Button type="submit" className={`w-full ${isLoading ? "bg-slate-300 text-accent" : ""}`} disabled={isLoading}>
+              {isLoading ? <Loader2 size={20} className=" animate-spin" /> : "Register"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
