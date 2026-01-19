@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
@@ -7,7 +7,15 @@ import "./globals.css"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bloodyboka.com"),
   title: "Premium 3D Hand Casting Kit | Create Family Keepsakes",
   description:
     "Create beautiful, skin-safe 3D hand casting sculptures. Preserve precious memories with our complete hand casting kit. Perfect for families, couples, and special moments.",
@@ -40,12 +48,7 @@ export const metadata: Metadata = {
     images: ["/og-image.jpg"],
   },
   generator: "gaurav",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+
   icons: {
     icon: [
       {
@@ -75,10 +78,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans antialiased`}>
-        {/* <SmoothScrolling> */}
+        <SmoothScrolling>
           {children}
           <Analytics />
-        {/* </SmoothScrolling> */}
+        </SmoothScrolling>
       </body>
     </html>
   )
