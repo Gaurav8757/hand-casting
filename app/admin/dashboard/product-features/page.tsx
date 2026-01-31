@@ -644,7 +644,7 @@ export default function ProductFeaturesManagement() {
                                                     <div className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                                                         {feature.title}
                                                     </div>
-                                                    <div className="text-sm text-foreground/40 font-medium truncate max-w-[300px]">
+                                                    <div className="text-sm text-foreground/40 font-medium truncate max-w-75">
                                                         {feature.description}
                                                     </div>
                                                     <div className="mt-1 flex gap-2">
@@ -692,7 +692,7 @@ export default function ProductFeaturesManagement() {
             >
                 <AlertDialogContent className="glass border-white/20 shadow-4xl max-w-md p-8 rounded-4xl">
                     <AlertDialogHeader>
-                        <div className="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto sm:mx-0">
+                        <div className="w-16 h-16 bg-red-500/20 rounded-2xl flex items-center justify-center mb-4 mx-auto">
                             <Trash2 className="w-8 h-8 text-red-500" />
                         </div>
                         <AlertDialogTitle className="text-2xl font-black text-foreground">
@@ -700,18 +700,19 @@ export default function ProductFeaturesManagement() {
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-foreground/60 text-base py-2">
                             {isBulkDelete ? (
+
                                 <span>
                                     You are about to permanently delete{" "}
                                     <strong>{deleteName}</strong>. This
                                     action is irreversible.
                                 </span>
                             ) : (
-                                <div className="space-y-3">
-                                    <p>
-                                        This will permanently erase <strong>{deleteName}</strong>{" "}
-                                        from the product features.
-                                    </p>
-                                </div>
+                                
+                                    <span className="block">
+                                        This will permanently erase <strong>{deleteName}</strong>
+                                       {" "} from the product features.
+                                    </span>
+                                
                             )}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
