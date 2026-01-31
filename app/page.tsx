@@ -12,6 +12,7 @@ import VisitorTracker from "@/components/visitor-tracker"
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import OurServices from "@/components/our-services"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -48,6 +49,7 @@ export default function Home() {
       <ProductShowcase />
       <HowItWorks />
       <Gallery />
+      <OurServices/>
       <Testimonials />
       <ContactSection />
       <Footer />

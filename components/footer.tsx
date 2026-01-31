@@ -3,6 +3,7 @@
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Facebook, Instagram, Linkedin, Mail } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -29,7 +30,7 @@ export default function Footer() {
     },
     {
       name: "Email",
-      url: "mailto:support@castkeep.com",
+      url: "mailto:hello@bloodyboka.com",
       icon: Mail,
       color: "hover:text-primary",
     },
@@ -93,22 +94,19 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-accent transition-colors">
+                <Link href="/faq" className="hover:text-accent transition-colors">
                   FAQ
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contact"
-                  className="hover:text-accent transition-colors"
-                >
+                <Link href="/contact" className="hover:text-accent transition-colors">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-accent transition-colors">
-                  Shipping & Returns
-                </a>
+                <Link href="/shipping-and-return-policy" className="hover:text-accent transition-colors">
+                  Shipping & Return Policy
+                </Link>
               </li>
             </ul>
           </div>
@@ -140,12 +138,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 space-y-4">
-          <div className="grid md:grid-cols-3 gap-4 text-xs text-foreground/60">
+        <div className="border-t border-white/10 pt-8 space-y-4 items-center">
+          <div className="grid md:grid-cols-3 gap-4 text-xs text-foreground/60 self-center">
             <div>
-              <a href="#" className="hover:text-accent transition-colors">
+              <Link href="/privacy-policy" className="hover:text-accent transition-colors">
                 Privacy Policy
-              </a>
+              </Link>
             </div>
             <div>
               <a href="#" className="hover:text-accent transition-colors">

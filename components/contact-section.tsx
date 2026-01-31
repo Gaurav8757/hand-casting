@@ -1,7 +1,7 @@
 "use client";
 
 import ContactForm from "@/components/contact-form";
-import { Phone, MessageCircle, Mail, Truck } from "lucide-react";
+import { Phone, MessageCircle, Mail } from "lucide-react";
 
 export default function ContactSection() {
   return (
@@ -15,12 +15,12 @@ export default function ContactSection() {
                 <span className="text-accent"> We're Here to Help</span>
               </h2>
               <p className="text-foreground/70 text-lg">
-                Our team is ready to assist with any questions about your
-                CastKeep hand casting kit.
+                Our team is ready to assist you with any inquiries about our 3D Hand Casting sessions, Custom Miniatures, or Resin Preservation services. Whether you want to book a session in Kolkata or order a gift online, Sayan and Sujay are just a message away.
               </p>
             </div>
 
             <div className="space-y-4">
+              <h3 className="font-bold text-lg text-foreground mb-4">Direct Support</h3>
               {/* Phone */}
               <a
                 href="tel:+917003020846"
@@ -31,10 +31,12 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">
-                    Call Us   <sup className="text-xs text-foreground/60 mt-1">24*7 IST</sup>
+                    Call Us (24/7 IST)
                   </h3>
                   <p className="text-foreground/70">+91 70030 20846</p>
-                
+                  <p className="text-xs text-foreground/60 mt-1">
+                    Speak directly with Sayan for bookings and consultations.
+                  </p>
                 </div>
               </a>
 
@@ -50,53 +52,39 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">
-                    WhatsApp
+                    WhatsApp Support
                   </h3>
                   <p className="text-foreground/70">
-                    Message us anytime for quick support
+                    Message us anytime for quick support or to send your reference photos.
                   </p>
                 </div>
               </a>
 
               {/* Email */}
               <a
-                href="mailto:support@castkeep.com"
+                href="mailto:hello@bloodyboka.com"
                 className="glass p-6 flex items-start gap-4 hover:bg-white/40 transition-all duration-300 group shadow-2xl"
               >
                 <div className="p-3 bg-accent/20 rounded-lg group-hover:scale-110 transition-transform">
                   <Mail className="text-accent" size={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                  <p className="text-foreground/70">support@bloodyboka.com</p>
+                  <h3 className="font-semibold text-foreground mb-1">Email Us</h3>
+                  <p className="text-foreground/70">hello@bloodyboka.com</p>
                   <p className="text-xs text-foreground/60 mt-1">
-                    Response within 24 hours
+                    Response within 24 hours for corporate or custom orders.
                   </p>
                 </div>
               </a>
-
-              {/* Shipping */}
-              <div className="glass p-6 flex items-start gap-4 shadow-2xl">
-                <div className="p-3 bg-accent/20 rounded-lg">
-                  <Truck className="text-accent" size={24} />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">
-                    Fast Shipping
-                  </h3>
-                  <p className="text-foreground/70">
-                    Orders ship within 24 hours
-                  </p>
-                  <p className="text-xs text-foreground/60 mt-1">
-                    Free shipping over ₹75
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 
           {/* Contact Form */}
-          <ContactForm />
+          <div className="space-y-8">
+            <ContactForm />
+            
+           
+          </div>
         </div>
       </div>
     </section>

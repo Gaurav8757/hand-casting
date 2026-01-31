@@ -45,18 +45,13 @@ export default function HeroProduct() {
         {/* Left: Content */}
         <div className="space-y-6 animate-in fade-in slide-in-from-left-8 duration-1000 ">
           <div className="space-y-4">
-            <div className="inline-block px-4 py-2 bg-accent/20 rounded-full text-accent font-medium text-sm">
-              ✨ Premium Hand Casting Kit
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground text-balance leading-tight">
-              Hold Their Hand
-              <span className="text-accent"> Forever</span>
+            <p className="text-lg md:text-xl text-accent font-semibold">✨ Personalized Gifts in Kolkata</p>
+            <h1 className="text-3xl md:text-6xl font-bold text-foreground text-balance leading-tight">
+              Premium Memory
+              <span className="text-accent"> Preservation & Handcrafted Gifts</span>
             </h1>
             <p className="text-lg text-foreground/70 text-balance max-w-lg leading-relaxed">
-              Create stunning 3D hand sculptures that capture precious moments.
-              Perfect for newborns, couples, families, and unforgettable
-              milestones. Skin-safe, simple, and ready to cherish for a
-              lifetime.
+              We don't just frame memories; we immortalize them. From 3D Wedding Miniatures to Lifelike Hand Casting, we turn your fleeting moments into timeless art.
             </p>
           </div>
 
@@ -65,11 +60,11 @@ export default function HeroProduct() {
               href="#contact-form"
               className="px-8 py-4 bg-primary text-foreground font-semibold rounded-lg hover:shadow-lg active:scale-95 transition-all duration-200"
             >
-              Get Started • ₹49.99
+              Get Started • ₹99
             </Link>
             <Link
               href="#how-it-works"
-              className="px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 active:scale-95 transition-all duration-200"
+              className="px-8 py-4 border-2 border-accent/50 text-accent/80 font-semibold rounded-lg hover:bg-primary/10 active:scale-95 transition-all duration-200"
             >
               See How It Works
             </Link>
