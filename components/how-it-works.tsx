@@ -1,28 +1,28 @@
 "use client";
 
-import { Droplet, Hand, Beaker, Sparkles } from "lucide-react";
+import { MessageSquare, Users, Sparkles, Package } from "lucide-react";
 
 export default function HowItWorks() {
   const steps = [
     {
-      icon: Droplet,
-      title: "Prep",
-      desc: "Mix molding powder with room-temperature water until smooth",
+      icon: MessageSquare,
+      title: "Share Your Vision",
+      desc: "Pick your product and tell us your story via our form or WhatsApp.",
     },
     {
-      icon: Hand,
-      title: "Dip",
-      desc: "Submerge hands and hold still for 2–5 minutes until mold sets",
-    },
-    {
-      icon: Beaker,
-      title: "Pour",
-      desc: "Mix casting powder and pour into negative mold, tapping to remove bubbles",
+      icon: Users,
+      title: "Expert Consultation",
+      desc: "We will personally chat with you to finalize every tiny detail.",
     },
     {
       icon: Sparkles,
-      title: "Reveal",
-      desc: "Peel away alginate after 3–4 hours to reveal beautiful 3D sculpture",
+      title: "Handcrafting the Magic",
+      desc: "We get to work, meticulously crafting your memory into a handmade masterpiece.",
+    },
+    {
+      icon: Package,
+      title: "Delivered with Love",
+      desc: "Your art is packed with care and shipped safely to your doorstep.",
     },
   ];
 

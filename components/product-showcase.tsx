@@ -60,7 +60,7 @@ export default function ProductShowcase() {
               What's Inside
             </h2>
             <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Everything you need to create beautiful hand cast sculptures
+              We provide everything you need to preserve your raw emotions and craft beautifully customized gifts that stay forever.
             </p>
           </div>
           <div className="flex items-center justify-center py-20">
@@ -80,7 +80,7 @@ export default function ProductShowcase() {
               What's Inside
             </h2>
             <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-              Everything you need to create beautiful hand cast sculptures
+            We provide everything you need to preserve your raw emotions and craft beautifully customized gifts that stay forever.
             </p>
           </div>
           <div className="text-center py-20 text-foreground/50">

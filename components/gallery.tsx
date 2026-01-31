@@ -66,7 +66,7 @@ export default function Gallery() {
             Gallery
           </h2>
           <p className="text-lg text-foreground/70">
-            Inspiring hand casting projects from our customers
+            Our Best Handcrafted Personalized Gifts
           </p>
         </div>
 

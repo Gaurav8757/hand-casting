@@ -45,25 +45,20 @@ export default function AboutUs() {
 
   const team = [
     {
-      name: "Sarah Henderson",
-      role: "Founder & Artist",
-      bio: "Starting with a passion for preserving family moments, Sarah turned her hobby into a premium craft."
+      name: "Sayan Ghosh",
+      role: "Partner & Brand Strategist",
+      bio: "The visionary behind the Bloody Boka identity, Sayan ensures that every customer's story is told with the perfect blend of creativity and professionalism."
     },
     {
-        name: "David Chen",
-        role: "Head of Product",
-        bio: "Ensuring every kit meets the highest standards of safety and detail reproduction."
-    },
-     {
-        name: "Emily Davis",
-        role: "Creative Director",
-        bio: "Designing the aesthetic that makes every CastKeep product a work of art."
+        name: "Sujay Jaguliya",
+        role: "Partner & Creative Director",
+        bio: "Co-founder of Bloody Boka, Sujay brings passion and precision to every artistic creation."
     }
   ]
 
   const stats = [
       { label: "Happy Families", value: "10,000+" },
-      { label: "Kits Delivered", value: "25,000+" },
+      { label: "Masterpieces Created", value: "25,000+" },
       { label: "5-Star Reviews", value: "5,000+" }
   ]
 
@@ -90,7 +85,7 @@ export default function AboutUs() {
                 </span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                We believe some memories are too precious to fade. Our mission is to give you a way to hold onto them forever—literally.
+                We believe some memories are too precious to fade. At Bloody Boka, our mission is to give you a way to hold onto them forever—literally. Whether it's a physical impression or a visual masterpiece, we turn your emotions into archival art.
             </p>
         </div>
       </section>
@@ -113,12 +108,12 @@ export default function AboutUs() {
                       <Clock size={16} />
                       <span>Our Journey</span>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Story</h2>
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground">The Story of Bloody Boka</h2>
                   <p className="text-muted-foreground leading-relaxed text-lg">
-                      It all started in a small workshop with a big idea: what if we could freeze a moment in time? Not just a photograph, but something tangible. Something you could touch and feel.
+                      It all started with a big idea between partners Sayan Ghosh and Sujay Jaguliya: what if we could freeze a moment in time? Not just a photograph, but something tangible. Something you could touch, feel, and admire on your wall.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                      At CastKeep, we spent years perfecting our alginate formula to ensure it captures every microscopic detail—from the tiniest wrinkle on a newborn's foot to the wedding ring on your partner's hand. We are dedicated to providing a safe, easy, and memorable experience for families everywhere.
+                      At Bloody Boka, we have mastered a diverse range of artistic mediums to preserve your legacy. From the microscopic skin textures of 3D Hand Casting and the intricate thread-work of Custom String Art, to the delicate preservation of Wedding Varmalas in Resin and the lifelike detail of 3D Miniatures, we do it all. We are dedicated to providing a safe, artistic, and premium experience for families and couples across Kolkata and beyond.
                   </p>
                   <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/50">
                       {stats.map((stat, i) => (
@@ -136,15 +131,15 @@ export default function AboutUs() {
       <section className="py-20 px-4 md:px-8 bg-secondary/10 reveal-section">
           <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16 max-w-2xl mx-auto">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why Families Trust Us</h2>
-                  <p className="text-muted-foreground text-lg">The CastKeep standard of excellence defines everything we do, from our materials to your experience.</p>
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">The Bloody Boka Standard of Excellence</h2>
+                  <p className="text-muted-foreground text-lg">Our commitment to quality defines every product we create, from large-scale frames to tiny miniatures.</p>
               </div>
               
               <div className="grid md:grid-cols-3 gap-8">
                   {[
-                      { icon: ShieldCheck, title: "100% Skin Safe", desc: "Our formulas are non-toxic, hypoallergenic, and biodegradable, making them perfectly safe for sensitive skin, babies, and even pets." },
-                      { icon: Clock, title: "Captures Every Detail", desc: "Our high-definition chromatic alginate formula replicates intricate fingerprints, jewelry details, and skin texture perfectly." },
-                      { icon: Award, title: "Premium Quality", desc: "We use only museum-grade casting stone that is chip-resistant and stands the test of time, preserving your memory for generations." }
+                      { icon: ShieldCheck, title: "100% Skin Safe & Non-Toxic", desc: "Our 3D Casting formulas are hypoallergenic and biodegradable, making them perfectly safe for newborns and pets." },
+                      { icon: Award, title: "Hyper-Realistic Detail", desc: "Whether it's a 3D Miniature or a hand mold, our techniques replicate intricate fingerprints and facial features with 100% accuracy." },
+                      { icon: Sparkles, title: "Museum-Grade Materials", desc: "We use high-clarity, UV-resistant resin for Flower Preservation and chip-resistant stone for our casts to ensure they last for generations." }
                   ].map((item, i) => (
                       <div key={i} className="glass p-8 hover:bg-white/40 transition-all duration-300 hover:scale-105 border-transparent hover:border-white/20">
                           <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center text-primary mb-6 shadow-sm">
@@ -194,9 +189,9 @@ export default function AboutUs() {
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
                 
                 <div className="relative z-10">
-                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Create Your Masterpiece?</h2>
+                    <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Preserve Your Precious Memories?</h2>
                     <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-                        Join thousands of happy families who have preserved their most precious memories with CastKeep.
+                        Join thousands of happy families who have preserved their most precious memories with Bloody Boka.
                     </p>
                     <a href="/#product" className="inline-block bg-primary text-primary-foreground px-10 py-4 rounded-full font-bold text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 hover:shadow-primary/30 transform hover:-translate-y-1 active:translate-y-0">
                         Shop Experiences
