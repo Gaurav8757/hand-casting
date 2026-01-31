@@ -351,7 +351,7 @@ export default function ContactForm() {
 
         {error && (
           <div className="flex items-center gap-3 p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
-            <AlertCircle size={20} className="text-destructive flex-shrink-0" />
+            <AlertCircle size={20} className="text-destructive shrink-0" />
             <p className="text-sm text-destructive">{error}</p>
           </div>
         )}

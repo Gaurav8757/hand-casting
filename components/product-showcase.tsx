@@ -147,7 +147,7 @@ export default function ProductShowcase() {
                       className="rounded-xl object-cover"
                     />
                   ) : (
-                    <div className="w-[450px] h-[450px] bg-white/5 rounded-xl flex items-center justify-center text-foreground/30">
+                    <div className="w-112.5 h-112.5 bg-white/5 rounded-xl flex items-center justify-center text-foreground/30">
                       No image
                     </div>
                   )}
