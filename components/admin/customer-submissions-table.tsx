@@ -443,9 +443,9 @@ export default function CustomerSubmissionsTable() {
           </div>
           <Input
             placeholder="Filter Email Node..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            value={(table.getColumn("contact")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              table.getColumn("contact")?.setFilterValue(event.target.value)
             }
             className="pl-12 h-14 bg-white/5 border-white/10 rounded-2xl focus:ring-accent font-bold uppercase tracking-widest text-[11px]"
           />
