@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // IMPORTANT for Hostinger
   typescript: {
     ignoreBuildErrors: true,
   },
