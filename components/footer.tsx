@@ -24,7 +24,7 @@ export default function Footer() {
     },
     {
       name: "LinkedIn",
-      url: "https://linkedin.com/company/castkeep",
+      url: "https://linkedin.com/company",
       icon: Linkedin,
       color: "hover:text-primary",
     },
@@ -127,10 +127,9 @@ export default function Footer() {
                     href={social.url}
                     target={isMobile ? "_self" : "_blank"}
                     rel="noopener noreferrer"
-                    className={`text-foreground/70 ${social.color} transition-colors duration-200`}
+                    className={`text-foreground ${social.color} transition-colors duration-200 hover:text-accent! cursor-pointer`}
                     aria-label={`Follow us on ${social.name}`}
-                    title={social.name}
-                  >
+                    title={social.name}>
                     <Icon size={20} />
                   </a>
                 );
