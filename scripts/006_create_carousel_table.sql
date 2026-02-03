@@ -120,14 +120,14 @@ CREATE TRIGGER update_carousel_items_updated_at
 -- =====================================================
 
 -- Check if table exists
--- SELECT EXISTS (
---   SELECT FROM information_schema.tables 
---   WHERE table_schema = 'public' 
---   AND table_name = 'carousel_items'
--- );
+SELECT EXISTS (
+  SELECT FROM information_schema.tables 
+  WHERE table_schema = 'public' 
+  AND table_name = 'carousel_items'
+);
 
 -- Check RLS policies
--- SELECT * FROM pg_policies WHERE tablename = 'carousel_items';
+SELECT * FROM pg_policies WHERE tablename = 'carousel_items';
 
 -- Check storage policies
--- SELECT * FROM pg_policies WHERE tablename = 'objects' AND policyname LIKE '%carousel_media%';
+SELECT * FROM pg_policies WHERE tablename = 'objects' AND policyname LIKE '%carousel_media%';

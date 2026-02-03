@@ -12,13 +12,13 @@ export default function Footer() {
   const socialLinks = [
     {
       name: "Facebook",
-      url: "https://facebook.com/castkeepofficial",
+      url: "https://www.facebook.com/profile.php?id=61586609395454",
       icon: Facebook,
       color: "hover:text-primary",
     },
     {
       name: "Instagram",
-      url: "https://instagram.com/castkeepofficial",
+      url: "https://www.instagram.com/bloodyboka/",
       icon: Instagram,
       color: "hover:text-primary",
     },
@@ -30,7 +30,7 @@ export default function Footer() {
     },
     {
       name: "Email",
-      url: "mailto:hello@bloodyboka.com",
+      url: "mailto:support@bloodyboka.com",
       icon: Mail,
       color: "hover:text-primary",
     },
@@ -58,24 +58,28 @@ export default function Footer() {
               <li>
                 <a
                   href="#product"
-                  className="hover:text-accent transition-colors"
-                >
-                  Hand Casting Kit
+                  className="hover:text-accent transition-colors">
+                 The Casting Studio
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-accent transition-colors">
-                  Refill Kits
+                  Resin Preservation
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-accent transition-colors">
-                  Finishing Paints
+                  The Miniature Lab
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-accent transition-colors">
-                  Display Bases
+                  String Art Gallery
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-accent transition-colors">
+                  Customised your own
                 </a>
               </li>
             </ul>
@@ -121,7 +125,7 @@ export default function Footer() {
                   <a
                     key={social.name}
                     href={social.url}
-                    target="_blank"
+                    target={isMobile ? "_self" : "_blank"}
                     rel="noopener noreferrer"
                     className={`text-foreground/70 ${social.color} transition-colors duration-200`}
                     aria-label={`Follow us on ${social.name}`}
@@ -138,8 +142,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 space-y-4 items-center">
-          <div className="grid md:grid-cols-3 gap-4 text-xs text-foreground/60 self-center">
+        <div className="border-t border-white/10 pt-4 space-y-4 flex flex-col items-center">
+          <div className="grid md:grid-cols-2 gap-4 text-xs text-foreground/60 self-center mx-auto">
             <div>
               <Link href="/privacy-policy" className="hover:text-accent transition-colors">
                 Privacy Policy
@@ -150,18 +154,15 @@ export default function Footer() {
                 Terms of Service
               </a>
             </div>
-            <div>
+            {/* <div>
               <a href="#" className="hover:text-accent transition-colors">
                 Bulk Orders
               </a>
-            </div>
+            </div> */}
           </div>
           <p className="text-center text-foreground/60 text-sm">
             &copy; {currentYear} Bloody Boka. All rights reserved. | Skin-Safe •
-            Non-Toxic • Proudly Family-Owned |{" "}
-            <a href="#contact" className="hover:text-accent transition-colors">
-              Contact
-            </a>
+            Non-Toxic • Proudly Family-Owned
           </p>
         </div>
       </div>
